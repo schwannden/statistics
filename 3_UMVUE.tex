@@ -1,0 +1,194 @@
+\section{Continuous to Point Estimation: sufficiency for UMVUE}
+
+\textbf{Sufficient statistics}
+Let A and B be two events. The conditional probability of A given B is defined as
+$$\mathbb{P}(A|B) = \frac{\mathbb{P}(A\cap B)}{\mathbb{P}(B)}$$
+And we showed that $\mathbb{P}(x|B)$ is a probability function too.\\
+
+In estimation of $\theta$, we have a random sample $\mathbb{X}_1, ..., \mathbb{X}_n$ from distribution $f(x, \theta)$. The information we have abour $\theta$ is contained in $\mathbb{X}_1, ..., \mathbb{X}_n$.
+
+Let $U = U(\mathbb{X}_1, ..., \mathbb{X}_n)$ be a statistic having p.d.f $f_U(u, \theta)$. The conditional p.d.f of $\mathbb{X}_1, ..., \mathbb{X}_n$ given $U=u$ is
+$$f( x_1, ..., x_n, \theta | u ) = 
+\begin{cases}
+\frac{f(x_1, ..., x_n, \theta)}{f_U(u, \theta)} & \text{ if } u(x_1, ..., x_n) = u \\
+\frac{0}{f_U(u, \theta)} = 0 & \text{ if } u(x_1, ..., x_n) \neq u
+\end{cases}$$
+
+If for any $U = u$, conditional p.d.f $f(x_1, ..., x_n, \theta | u)$ is unrelated to $\theta$, i.e. $\forall_u\forall_{\theta_1, \theta_2} f(x_1, ..., x_n, \theta_1 | u) = f(x_1, ..., x_n, \theta_2 | u)$, then the random sample $\mathbb{X}_1, ..., \mathbb{X}_n$ contains no more information about $\theta$ then $U=u$ is observed. This indicates that $U=u$ contains information about $\theta$ exactly the same amount as $\mathbb{X}_1, ..., \mathbb{X}_n$.\\
+
+\textbf{Definition} Let $\mathbb{X}_1, ..., \mathbb{X}_n$ be a random sample from $f(x, \theta), \theta\in\Theta$. We call a statistic $U=u(x_1, ..., x_n)$ a sufficient statistic if, for any value $U=u$, the conditional p.d.f $f(x_1, ..., x_n, \theta | u)$ and its domain do not depend on $\theta$.\\
+
+\textbf{Example} Let $U = (\mathbb{X}_1, ..., \mathbb{X}_n)$, then
+$$f(x_1, ..., x_n, \theta | u = (\acute{x}_1, ..., \acute{x}_n)) = 
+\begin{cases}
+\frac{f(\acute{x}_1, ..., \acute{x}_n, \theta)}{f(\acute{x}_1, ..., \acute{x}_n, \theta)} = 1 & \text{ if } (x_1, ..., x_n) = (\acute{x}_1, ..., \acute{x}_n) \\
+\frac{0}{f(\acute{x}_1, ..., \acute{x}_n, \theta)} = 0 & \text{ if } (x_1, ..., x_n) \neq (\acute{x}_1, ..., \acute{x}_n)
+\end{cases}
+$$
+which is independent of $\theta$, so random sample $(\mathbb{X}_1, ..., \mathbb{X}_n)$ is a sufficient statstics.\\
+
+\textbf{Example} Let $\mathbb{X}_1, ..., \mathbb{X}_n$ be a random sample from $f(x, \theta), \theta\in\Theta$. Consider the order statistics $Y_1, ..., Y_n$. If $(Y_1, ..., Y_n) = (y_1, ..., y_n)$ is observed, sample $\mathbb{X}_1, ..., \mathbb{X}_n$ has equal chance in the set 
+$$A = \{ (x_1, ..., x_n)\in\mathbb{R}^n | (y_1, ..., y_n) \text{ is a permutation of } (x_1, ..., x_n) \}$$
+Then the condition p.d.f of $\mathbb{X}_1, ..., \mathbb{X}_n$ given $(Y_1, ..., Y_n) = (y_1, ..., y_n)$ is
+$$\begin{cases}
+\frac{1}{n!} & \text{ if } (x_1, ..., x_n) \in A \\
+0 & \text{ otherwise}
+\end{cases}$$
+which is independent of $\theta$. Hence $(Y_1, ..., Y_n)$ is a sufficient statistic.\\
+
+Why sufficiency?
+
+We want a statistic with dimension as small as possible and that contains information about $\theta$ with the same amount as $(\mathbb{X}_1, ..., \mathbb{X}_n)$.\\
+
+\textbf{Definition} If $U = U(\mathbb{X}_1, ..., \mathbb{X}_n)$ is a sufficient statistic whose range has the smallest dimension, it is called the minimal sufficient statistic.\\
+
+\textbf{Example} Let $\mathbb{X}_1, ..., \mathbb{X}_n$ be a random sample from $Bernoulli(p), {p\in[0,1]}$, the joint p.d.f of $\mathbb{X}_1, ..., \mathbb{X}_n$ is
+$$f(x_1, ..., x_n, p) = p^{\sum x_i}(1-p)^{n-\sum x_i}$$
+Consider the statistics $Y = \sum_{i=1}^n X_i$ which has binomial distribution. The conditional p.d.f of $\mathbb{X}_1, ..., \mathbb{X}_n$ given $Y=y$ is $$f(\textbf{x}, p | y) = 
+\begin{cases}
+\frac{p^y(1-p)^{n-y}}{{n \choose y}p^y(1-p)^{n-y}} = \frac{y!(n-y)!}{n!} & \text{ if } \sum_{i=1}^n x_i = y \\
+\frac{0}{{n \choose y}p^y(1-p)^{n-y}} = 0 & \text{ otherwise}
+\end{cases}$$  
+
+So $Y$ is sufficient statistics. Furthermore, $Y$ is minimal sufficient statistic, because 1 is the minial possible dimension.
+
+\textbf{Example} Let $\mathbb{X}_1, ..., \mathbb{X}_n$ be a random sample from $U(0, \theta)$. Show that the $n$th-order statistic $Y_n = max(\mathbb{X}_1, ..., \mathbb{X}_n)$ is a minimal sufficient statistic.\\
+
+\textbf{Solution} The joint p.d.f of $\mathbb{X}_1, ..., \mathbb{X}_n$ is
+$$f(x_1, ..., x_n, \theta) = 
+\begin{cases}
+\frac{1}{\theta^n} & \text{ if } x_i's \in [0, \theta]\\
+0 & \text{otherwise}
+\end{cases}$$
+And recall that the p.d.f. of $Y_n$ is $f_{Y_n}(y) = n(\frac{y}{\theta})^{n-1}\frac{1}{\theta}$ for $y\in[0,\theta]$. When $Y_n = y$ is given, all $x_i's$ satisfies $x_i \leq y$. The conditional p.d.f of $\mathbb{X}_1, ..., \mathbb{X}_n$ given $Y_n = y$ is
+$$f(x_1, ..., x_n, \theta | y) = 
+\begin{cases}
+\frac{f(x_1, ..., x_n, \theta, Y_n = y)}{f_{Y_n}(y)} =
+ \frac{\frac{1}{\theta^n}}{n(\frac{y}{\theta})^{n-1}\frac{1}{\theta}} = \frac{1}{ny^{n-1}} & \text{ if } x_i's \leq y\\
+0 & \text{otherwise}
+\end{cases}$$
+
+So $Y_n$ is a minimal sufficient statistic.\\
+
+Now we want an easy way to derive sufficient statistics.\\
+
+\textbf{Theorem} \textbf{(Factorization theorem)} Let $\mathbb{X}_1, ..., \mathbb{X}_n$ be a random sample from $f(x, \theta)$. A statistic $U = U(\mathbb{X}_1, ..., \mathbb{X}_n)$ is sufficient for $\theta$ if and only if there exists functions $K_1, K_2 \geq 0$ such that the joint p.d.f of $\mathbb{X}_1, ..., \mathbb{X}_n$ may be formulated as $f(x_1, ..., x_n, \theta) = K_1(U(x_1, ..., x_n), \theta)K_2(x_1, ..., x_n)$\\
+
+\textbf{Proof} ($\Rightarrow$) If $U$ is sufficient, then the conditional p.d.f of $\mathbb{X}_1, ..., \mathbb{X}_n$ given $U=\mu$ is
+$$f( x_1, ..., x_n, \theta | u ) = 
+\begin{cases}
+\frac{f(x_1, ..., x_n, \theta)}{f_U(u, \theta)} & \text{ if } u(x_1, ..., x_n) = \mu \\
+\frac{0}{f_U(u, \theta)} = 0 & \text{ if } u(x_1, ..., x_n) \neq \mu
+\end{cases}$$
+is unrelated to $\theta$. so $K_1 = f_U(u, \theta), K_2 = f(x_1, ..., x_n, \theta | u)$.\\
+
+($\Leftarrow$) Suppose that $f(x_1, ..., x_n, \theta) = K_1(u(x_1, ..., x_n), \theta)K_2(x_1, ..., x_n)$. Let $Y_1 = u(\mathbb{X}_1, ..., \mathbb{X}_n)$, and for $i \in 2, ..., n$,  $Y_i = u_i(\mathbb{X}_1, ..., \mathbb{X}_n)$ be a 1-1 transformation with inverse function $X_i = w_i(Y_1, ..., Y_n)$, and Jacobian
+$$J = \begin{vmatrix}
+\frac{\partial x_1}{\partial y_1} & \cdots & \frac{\partial x_1}{\partial y_n}\\
+\vdots & \ddots & \vdots\\
+\frac{\partial x_n}{\partial y_1} & \cdots & \frac{\partial x_n}{\partial y_n}
+\end{vmatrix}$$
+The joint p.d.f of $Y_1, ..., Y_n$ is
+$$f_{Y_1, ..., Y_n}(y_1, ..., y_n, \theta) = f( w_1(y_1, ..., y_n), ..., w_n(y_1, ..., y_n), \theta )|J|$$
+$$= K_1(y_1, \theta)K_2(w_1(y_1, ..., y_n), ..., w_n(y_1, ..., y_n) )|J|$$
+The p.d.f of $U = Y_1$ is
+$$f_U(y, \theta) = \int...\int K_1(y_1, \theta)K_2(w_1(y_1, ..., y_n), ..., w_n(y_1, ..., y_n) )|J|\mathrm{d}y_2...\mathrm{d}y_n$$
+$$= K_1(y_1, \theta) \int...\int K_2(w_1(y_1, ..., y_n), ..., w_n(y_1, ..., y_n) )|J|\mathrm{d}y_2...\mathrm{d}y_n$$
+And note that everything in the integral is unrelated to $\theta$. Then the conditional p.d.f of $\mathbb{X}_1, ..., \mathbb{X}_n$ given $U=u$ is
+$$f(x_1, ..., x_n, \theta | u) = 
+\begin{cases}
+\frac{f(x_1, ..., x_n, \theta)}{f_U(u, \theta)} = \frac{K_2(x_1, ..., x_n)}{\int...\int K_2\mathrm{d}y_2...\mathrm{d}y_n} & \text{ if } u(x_1, ..., x_n) = u\\
+0 & \text{ otherwise }
+\end{cases}$$ 
+
+\textbf{Example} $\mathbb{X}_1, ..., \mathbb{X}_n \overset{i.i.d}{\sim} Poisson(\lambda)$, so joint p.d.f of $\mathbb{X}_1, ..., \mathbb{X}_n$ is
+$$f(x_1, ..., x_n, \lambda) = \prod_{i=1}^n \frac{\lambda^{x_i} e^{-\lambda}}{x_i!}$$
+$(\mathbb{X}_1, ..., \mathbb{X}_n), \sum X_i, \bar{X}$ are all sufficient.\\
+
+\textbf{Example} $\mathbb{X}_1, ..., \mathbb{X}_n \overset{i.i.d}{\sim} normal(\mu, \sigma^2)$, want sufficient statistic from $(\mu, \sigma^2)$.\\
+
+\textbf{Solution} Joint p.d.f of $\mathbb{X}_1, ..., \mathbb{X}_n, \mu, \sigma^2$ is
+$$\prod_{i=1}^n \frac{1}{\sqrt{2\pi\sigma}}e^{-\frac{(x_i-\mu)^2}{2\sigma^2}} = (2\pi)^{-\frac{n}{2}}(\sigma^2)^{-\frac{n}{2}}e^{-\frac{\sum(x_i-\mu)^2}{2\sigma^2}}$$
+
+$$\sum(x_i-\mu)^2 = \sum(x_i-\bar{x}+\bar{x}-\mu)^2 = \sum(x_1-\bar{x})^2 + n(\bar{x}-\mu)^2+2(\bar{x}-\mu)\sum(x_i-\bar{x})$$
+$$(n-1)S^2+n(\bar{x}-\mu)^2$$
+
+$$\Rightarrow f(x_1, ..., x_n, \mu, \sigma^2 ) = (2\pi)^{-\frac{n}{2}}(\sigma^2)^{-\frac{n}{2}}e^{-\frac{(n-1)S^2+n(\bar{x}-\mu)^2}{2\sigma^2}} * 1$$
+$\Rightarrow (\bar{X}, S^2) $ is minimal sufficient for $ (\mu, \sigma^2) $\\
+
+\textbf{Definition} $(X, Y)$ are random variables, conditional mean of $\mathbb{Y}$ given $X=x$, $\mathbb{E}[Y|X]$ is defined as
+$$\int yf(y|x) \mathrm{d}y$$
+Conditional variance of $\mathbb{Y}$ given $X=x$, $var(Y|X)$ is defined as
+$$\mathbb{E}[ (Y - \mathbb{E}[Y|X])^2 |X ] = \int (y-\mathbb{E}[Y|X])^2 f(y|x) \mathrm{d}y = 
+\mathbb{E}[ Y^2 |X ] - (\mathbb{E}[Y|X])^2$$
+
+Note both conditional mean and condition variance of $Y$ given $X=x$ are actually function of x. So here we distinguish the constant value of conditional mean (when $x$ is given) and the its general form\\
+
+\textbf{Definition} random conditional mean is $\mathbb{E}[Y|X]$ and random variance is $var(Y|X)$.\\
+
+\textbf{Theorem}\\
+(a)$\mathbb{E}[\mathbb{E}[Y|X]] = \mathbb{E}[Y]$\\
+(b)$var(Y) = \mathbb{E}[var(Y|X)]+var(\mathbb{E}[Y|X])$\\
+
+\textbf{Proof}\\
+(a) trivial\\
+(b) $var(Y|X) = \mathbb{E}[ Y^2 |X ] - (\mathbb{E}[Y|X])^2$, so $\mathbb{E}[var(Y|X)] = \mathbb{E}[Y^2] - \mathbb{E}[(\mathbb{E}[Y|X])^2]$. And $var(\mathbb{E}[Y|X]) = \mathbb{E}[ \mathbb{E}[Y|X]^2 ] - (\mathbb{E}[\mathbb{E}[Y|X]])^2 = \mathbb{E}[Y]^2$. Therefore $\mathbb{E}[var(Y|X)]+var(\mathbb{E}[Y|X]) = \mathbb{E}[ Y^2 |X ] - \mathbb{E}[Y]^2$\\
+
+\textbf{Theorem} (Rao-blackwell) If $\hat{\tau}(\mathbb{X}_1, ..., \mathbb{X}_n)$ is an unbiased estimation of $\tau(\theta)$ and $U = U(\mathbb{X}_1, ..., \mathbb{X}_n)$ is sufficient for $\theta$, then\\
+(a) $\mathbb{E}[ \hat{\tau}(\mathbb{X}_1, ..., \mathbb{X}_n) | U ]$ is a statistic\\
+(b) $\mathbb{E}[ \hat{\tau}(\mathbb{X}_1, ..., \mathbb{X}_n) | U ]$ is unbiased for $\tau(\theta)$\\
+(c) $var_\theta( \mathbb{E}[ \hat{\tau}(\mathbb{X}_1, ..., \mathbb{X}_n) | U ] )\leq var_\theta( \hat{\tau}(\mathbb{X}_1, ..., \mathbb{X}_n) )$ for $\theta\in\Theta$\\
+
+\textbf{Proof}\\
+(a) trivial, since the expection is integrating on terms unrelated to $\theta$\\
+(b) $\mathbb{E}_\theta[ \mathbb{E}[ \hat{\tau}(\mathbb{X}_1, ..., \mathbb{X}_n) | U ] ] = \mathbb{E}[ \hat{\tau}(\mathbb{X}_1, ..., \mathbb{X}_n) ] = \tau(\theta)$\\
+(c) $var_\theta( \hat{\tau}(\mathbb{X}_1, ..., \mathbb{X}_n) ) = \mathbb{E}_\theta[ var_\theta( \hat{\tau}(\mathbb{X}_1, ..., \mathbb{X}_n) | U) ] + var_\theta( \mathbb{E} [ \hat{\tau}(\mathbb{X}_1, ..., \mathbb{X}_n) | U ] )$
+$$\Rightarrow var_\theta( \hat{\tau}(\mathbb{X}_1, ..., \mathbb{X}_n) ) \geq var_\theta( \mathbb{E} [ \hat{\tau}(\mathbb{X}_1, ..., \mathbb{X}_n) | U ] )$$\\
+
+Rao-blackwell theorem gives us a way to improve on unbiased statistic, but we still need other idea to further understand the limitation of this improvement.\\
+
+Let $U$ be a statistic. If $h(U) = 0$ or $\mathbb{P}(h(U)=0)=1$, then p.d.f of $h(U)$ is
+$$f_{h(U)}(x) = 
+\begin{cases}
+1 & \text{ if } x=0\\
+0 & \text{ otherwise }
+\end{cases}$$
+Then
+$$\mathbb{E}_\theta[ h(U) ] = 0$$
+That is, if $h(U) = 0$ or $\mathbb{P}(h(U)=0)=1$, then for all $\theta\in\Theta$, $\mathbb{E}_\theta[ h(U) ] = 0$.\\
+
+However, for any $U$, if for all $\theta\in\Theta$, we have $\mathbb{E}_\theta[h(U)] = 0$, it is not necessary that $\mathbb{P}(h(U)=0)=1$.\\
+
+\textbf{Example} Let $X_1, X_2 \overset{i.i.d}{\sim} normal(\mu, \theta)$. $U = X_1 - X_2$, and let $h(U) = U$. And we have $\mathbb{E}_{\mu, \sigma^2}[U] = 0$, but $\mathbb{P}(h(U)=0)=0$\\
+
+\textbf{Definition} Let $\mathbb{X}_1, ..., \mathbb{X}_n$ be a random sample from $f(x, \theta)$, a statistic $U = U(\mathbb{X}_1, ..., \mathbb{X}_n)$ is a complete statistic if for any function $h$ such that $E_\theta[h(U)] = 0$, then
+$$\mathbb{P}(h(U)=0)=1 \text{ for } \theta\in\Theta$$
+
+To verify $\mathbb{P}( h(U) = 0 ) = 1$, it is sufficient to prove that $U(\mathbb{R}) - \{h(U) = 0\}$ has measure zero. Notice if $\{h(U) = 0\} \supset U(\mathbb{R})$, then $U(\mathbb{R}) - \{h(U) = 0\} = \emptyset$, and empty set has measure zero.\\
+
+\textbf{Example} If $X_1, ..., .X_n \overset{i.i.d}{\sim} Bernoulli(p)$, we can show $Y = \sum X_i$ is complete. Suppose a function $h$ satisfies $\mathbb{E}( h(Y) = 0 ) = 1$ for all $p$, then
+$$\sum_{k=0}^n h(k) {n \choose k} p^k(1-p)^{n-k} = (1-p)^n\sum_{k=0}^n h(k) {n \choose k} (\frac{p}{1-p})^k = 0 \text{ for all } p$$
+But a polynomial with non-zero coefficient has at most k roots, so it must be the case that $h(k) {n \choose k} = 0 $ for $k = 0, 1, ..., n$. And this implies $h(k)= 0 $ for $k = 0, 1, ..., n$. So the range of $Y$ = $\{0, 1, ..., n \} \subset \{h(k)= 0\}$.
+
+\textbf{Example} If $X_1, ..., .X_n \overset{i.i.d}{\sim} unifrom(\theta)$, we can show $Y_n = max(\mathbb{X}_1, ..., \mathbb{X}_n)$ is sufficient and complete.\\
+1. We have shown $Y_n$ is sufficient by definition, now we do it by factorization. The joint p.d.f of $\mathbb{X}_1, ..., \mathbb{X}_n$ is
+$$f(x_1, ..., x_n, \theta) = \prod_{i=1}^n \frac{1}{\theta^n} I_{\{Y_n \leq \theta\}} * 1$$
+with $K_1 = f(x_1, ..., x_n, \theta), K_2 = 1$.
+2. To show it is complete, for any function $h$, if for any $\theta\in\Theta$ we have
+$$\mathbb{E}[ h(Y_n) ] = \int_0^\theta n\frac{y^{n-1}}{\theta^n}h(y) \mathrm{d}y = \frac{n}{\theta^n} \int_0^\theta y^{n-1}h(y) \mathrm{d}y = 0$$
+So for all $\theta$, $\{ y | h(y) \neq 0 \}$ has measure zero in $[0, \theta]$, and so $\mathbb{P}( h(Y) = 0 ) = 1$\\
+
+\textbf{Theorem} (Lehmann-Scheffe) Let $\mathbb{X}_1, ..., \mathbb{X}_n$ be a random sample from $f(x, \theta)$, suppose that $U = U(\mathbb{X}_1, ..., \mathbb{X}_n)$ is a complete and sufficient statistic. If $\hat{\tau}(\theta) = t(U)$ is an unbiased estimator for $\tau(\theta)$, then $\hat{\tau}(\theta)$ is the unique function of $U$ that is unbiased for $\tau(\theta)$ and is UMVUE of $\tau(\theta)$. Note we say two random random variables $X, Y$ are equal if $\mathbb{P}( X = Y ) = 1$ So here we say $\hat{\tau}(\theta)$ is the unique function of $U$ that is unbiased for $\tau(\theta)$, it means
+$$\forall_{\text{ r.v } Y } \ Y \text{ is function of } U \text{ that is unbiased for } \tau(\theta) \to \mathbb{P}(Y = \hat{\tau}(\theta)) = 1$$\\
+
+\textbf{Proof}\\
+First I will prove function of $U$ that's unbiased is unique. Suppose $\acute{\tau}(\theta) = \acute{U}$ is also unbiased for $\tau(\theta)$, then
+$$\mathbb{E}[ \hat{\tau}(\theta) - \acute{\tau}(\theta) ] = \mathbb{E}[ \hat{\tau}(\theta) ] - \mathbb{E}[ \acute{\tau}(\theta) ] = \tau(\theta) - \tau(\theta) = 0$$
+And since $U$ is complete and $\hat{\tau}(\theta) - \acute{\tau}(\theta)$ is a function of $U$, we know 
+$$\mathbb{P}( \hat{\tau}(\theta) - \acute{\tau}(\theta) = 0 ) = \mathbb{P}( \hat{\tau}(\theta) = \acute{\tau}(\theta) ) = 1$$
+
+Second let's prove that it is UMVUE. If $T$ is any unbiased statistic for $\tau(\theta)$, then since $U$ is sufficient, Rao-Blackwell theorem, applies, and we have:\\
+(1). $\mathbb{E}[ T | U ]$ is an unbiased statistics.\\
+(2). $var( \mathbb{E}[ T | U ] ) \leq var( \mathbb{E}[ T ] )$\\
+
+By first step and (1), $var( \mathbb{E}[ T | U ] )$ is an unique unbiased statistics, and (2) completes proof.

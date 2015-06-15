@@ -1,0 +1,257 @@
+\section{Likelihood Ratio Test}
+What can we do if UMP test not exist for composite hypothesis. We consider likelihood ratio test.
+
+\textbf{Likelihood Ratio Test} Let  $\mathbb{X}_1, ..., \mathbb{X}_n$ be a random sample from $f(x, \theta), \theta \in \Theta$, the likelihood function is $L(\theta) = \prod_{i=1}^n f(x_i, \theta)$. We consider the hypothesis $H_0: \theta \in \Theta_0$ vs $H_1: \theta \in \Theta$. We also consider two maximum likelihood: 
+
+$$\underset{\theta\in\Theta_0}{\max\ } L(\theta) \ \ \text{ and }\ \  \underset{\theta\in\Theta}{\max\ } L(\theta) = L(\hat{\theta}_{mle})$$
+obviously we have
+$$\underset{\theta\in\Theta_0}{\max\ } L(\theta) \leq \underset{\theta\in\Theta}{\max\ } L(\theta)$$
+If these two maximum likelihoods are close, we believe $H_0$ is true.
+
+\textbf{Definition} The generalized likelihood ratio is 
+
+$$\lambda = \lambda(x_1, ..., x_n) = \frac{\underset{\theta\in\Theta_0}{\max\ } L(\theta)}{\underset{\theta\in\Theta}{\max\ } L(\theta)}
+= \frac{\underset{\theta\in\Theta_0}{\max\ } L(\theta)}{L(\hat{\theta}_{mle})}$$
+The likelihood ration test for  $H_0: \theta \in \Theta_0$ vs $H_1: \theta \in \Theta$ is:
+
+Rejecting $H_0$ if $\lambda(x_1, ..., x_n) \leq \lambda_0$ where $\lambda_0$ satisfies $\underset{\theta\in\Theta_0}{\max\ } \mathbb{P}(\lambda(x_1, ..., x_n) \leq \lambda_0 | \theta) = \alpha$
+
+Suppose that we have a statistics $\mathbb{T} = t(\mathbb{X}_1, ..., \mathbb{X}_n)$ such that $\lambda(x_1, ..., x_n) \leq \lambda_0$ if and only if $t(x_1, ..., x_n) \leq c$. Then the likelihood ration test has critical region $C  = \{  t(\mathbb{X}_1, ..., \mathbb{X}_n) \leq c \}$ such that
+$\alpha = \underset{\theta\in\Theta_0}{\max\ } \mathbb{P}(\lambda(x_1, ..., x_n) \leq \lambda_0 | \theta)$
+
+\textbf{Example} Let $\mathbb{X}_1, ..., \mathbb{X}_n$ be a random sample from exponential distribution with p.d.f $f(x, \theta) = \theta e^{-\theta x}, x>0$. We consider LRT for $H_0: \theta \leq \theta_0$ vs $H_1: \theta > \theta_0$.
+
+\textbf{Solution} The likelihood function is
+$$L(\theta) = \theta^n e^{-\theta \sum x_i}, \theta > 0$$
+$$\ln L(\theta) = n \ln \theta - \theta \sum x_i  \Rightarrow \frac{\partial}{\partial \theta}\ln L(\theta) = \frac{n}{\theta} - \sum x_i = 0$$
+$$\Rightarrow \text{mle } \hat{\theta} = \frac{1}{\bar{\mathbb{X}}} 
+\Rightarrow \underset{\theta>0}{\max} L(\theta) = L(\frac{1}{\bar{x}}) = \frac{1}{\bar{x}^n}e^{-n}$$
+$$\underset{\theta < \theta_0}{\max} L(\theta) = 
+\begin{cases}
+L(\theta_0) = \theta_0^n e^{-\theta_0 \sum x_i} & \text{if } \theta_0 <  \frac{1}{\bar{x}} \\
+L(\frac{1}{\bar{x}}) = \frac{1}{\bar{x}^n}e^{-n} & \text{if } \theta_0 \geq \frac{1}{\bar{x}}
+\end{cases}$$
+LR is
+$$\lambda(x_1, ..., x_n) = \frac{\underset{\theta \leq \theta_0}{\max\ } L(\theta)}{\underset{\theta > 0}{\max\ } L(\theta)}
+= \begin{cases}
+(\theta_0 \bar{x})^n e^{-n(\theta_0 \bar{x} - 1)} & \text{if } \bar{x} < \frac{1}{\theta_0} \\
+1 & \text{if } \bar{x} > \frac{1}{\theta_0}
+\end{cases}$$
+
+For $\bar{x} < \frac{1}{\theta_0} $, $\ln \lambda(x_1, ..., x_n) = n \ln(\theta_0 \bar{x}) -n(\theta_0 \bar{x} - 1)$
+$$\Rightarrow \frac{\partial}{\partial \bar{x}} \ln \lambda = \frac{n}{\bar{x}} - n\theta_0 = n(\frac{1}{\bar{x}} - \theta_0) > 0$$
+
+Since $\lambda$ is increasing in $\bar{x}$, LR critical region is $C = \{\bar{\mathbb{X}} \leq c\}$. 
+Note $X \sim exp(\theta) = \Gamma(1, \theta)$, so 
+$$\sum \mathbb{X}_i \sim \Gamma(n, \theta) \Rightarrow 2 \theta \sum \mathbb{X}_i \sim \Gamma(n, \frac{1}{2}) = \chi^2(2n)$$
+
+And we want $c$ such that
+$$\alpha = \mathbb{P}(\bar{\mathbb{X}} < c | \theta = \theta_0) = \mathbb{P}(\sum \mathbb{X}_i < nc | \theta = \theta_0)
+= \mathbb{P}(\theta_0 2 \sum \mathbb{X}_i \leq 2\theta_0 nc) = \mathbb{P}(\chi^2(2n) \leq 2\theta_0 nc)$$
+$$\Rightarrow c = \frac{\chi^2_\alpha}{2n\theta_0}$$
+
+\textbf{Example}  Let $\mathbb{X}_1, ..., \mathbb{X}_n$ be a random sample from $N(\mu, 1)$. Want LRT for $H_0: \mu = 0$ and $H_1: \mu \neq 0$.
+
+\textbf{Solution} This is a hypothesis without UMP test. The likelihood function id
+$$L(\mu) = ( \frac{1}{\sqrt{2\pi}} )^n e^{-\frac{1}{2}\sum(x_i-\mu)^2}$$
+To find maximum likelihood, let
+$$\frac{\partial}{\partial \mu} \ln L(\mu) = -\frac{\partial}{\partial \mu}\frac{1}{2}\sum(x_i-\mu)^2
+= 0 \iff \sum(x_i-\mu) = 0$$
+So mle $\hat{\mu} = \bar{x}$. $\underset{\mu\neq 0}{\max} L(\mu) = L(\hat{\mu}) = ( \frac{1}{\sqrt{2\pi}} )^n e^{-\frac{1}{2}\sum(x_i-\hat\mu})^2$, generalized LR is
+$$
+\frac{\underset{\mu = 0}{\max\ } L(\mu)}{\underset{\mu\neq 0}{\max\ } L(\mu)}
+= e^{-\frac{n}{2}\bar{x}^2} \leq \lambda \iff |\bar{x}| \geq c
+$$
+To find c
+$$\alpha = \mathbb{P}(|\bar{\mathbb{X}}| \geq c | \mu = 0) =
+1- \mathbb{P}-x \leq (|\bar{\mathbb{X}}| \leq c | \mu = 0) = 
+1-\mathbb{P}(-\sqrt{n}c \leq \mathbb{Z} \leq \sqrt{n}c)$$
+$$\Rightarrow c = \frac{\zeta_{\frac{\alpha}{2}}}{\sqrt{n}}$$
+
+\textbf{Example}  Let $\mathbb{X}_1, ..., \mathbb{X}_n$ be a random sample from $N(\mu, \sigma^2)$ where $\mu$ and $\sigma^2$ are unknown.In this case, any one sided  hypothesis on $\mu$ and $\sigma^2$has no UMP test. We consider LRT for  r $H_0: \mu = 0$ and $H_1: \mu \neq 0$.
+
+\textbf{Solution} It is equivalent to test  $H_0: \mu = 0, \sigma^2>0$ and $H_1: \mu \neq 0, \sigma^2>0$. The likelihood function is
+$$L(\mu) = ( \frac{1}{2\pi\sigma^2} )^{\frac{n}{2}} e^{-\frac{1}{2\sigma^2}\sum(x_i-\mu)^2}$$
+And mle for $\mu, \sigma^2$ is 
+$$\hat{\sigma}^2 = \frac{1}{n}\sum (\mathbb{X}_i - \bar{\mathbb{X}})$$
+$$\hat{\mu} = \bar{\mathbb{X}}$$
+and
+$$\underset{\mu = 0, \sigma>0}{\max\ } L(\theta) = (2\pi)^{-\frac{n}{2}} (\frac{1}{n}\sum x_i^2)^{-\frac{n}{2}} e^{-\frac{n}{2}}$$
+$$\underset{\mu \neq 0, \sigma>0}{\max\ } L(\theta)
+= (2\pi)^{-\frac{n}{2}} (\frac{1}{n}\sum (x_i-\bar{x})^2)^{-\frac{n}{2}} e^{-\frac{n}{2}}$$
+The generalized LR is
+$$\frac{\underset{\mu = 0, \sigma^2>0}{\max\ } L(\mu, \sigma)}{\underset{\mu\in\mathbb{R}, \sigma^2>0}{\max\ } L(\mu, \sigma)}
+= (\frac{\sum (x_i-\bar{x})^2}{\sum x_i^2})^\frac{n}{2} \leq \lambda_0$$
+$$\iff 1 + \frac{n\bar{x}^2}{\sum(x_i-\bar{x})^2} \geq \frac{1}{\lambda_0^\frac{n}{2}}
+ \iff \frac{n\bar{x}^2}{(n-1)\mathbb{S}^2} \geq  \frac{1}{\lambda_0^\frac{n}{2}} - 1$$
+$$\iff \frac{\bar{x}^2}{\mathbb{S}^2/n} \geq (n-1)(\frac{1}{\lambda_0^\frac{n}{2}} - 1) = c$$
+To test $H_0$, we use $\frac{\bar{\mathbb{X}}-\mu}{S/\sqrt{n}} \sim t(n-1)$
+$$|\frac{\bar{x}}{S/\sqrt{n}}| \geq \sqrt{c} = c_0$$
+
+$$\alpha = \mathbb{P}(|\frac{\bar{x}}{S/\sqrt{n}}| \geq \sqrt{c} | \mu = 0)
+1 - \mathbb{P}(-c_0 \leq T \leq c_0) \Rightarrow c_0 = t_{\frac{\alpha}{2}}$$
+
+For the problem of testing hypothesis of two means as $H_0: \mu_x = \mu_y$, we assume that variance of two distribution are equal. How do we know that this is true?
+
+\textbf{F-distribution}
+A r.v is said to have a F-distribution with degree of freedoms $(v_1, v_2)$ if there are independent $\chi^2(v_1)$ and $\chi^2(v_2)$ such that $F = \frac{\chi^2(v_1)/v_1}{\chi^2(v_2)/v_2}$
+
+We denote $F \sim f(v_1, v_2)$
+
+We denote $f_\alpha(v_1, v_2)$ with $\mathbb{P}(F \geq f_\alpha(v_1, v_2)) = \alpha$. In table, we can find $f_\alpha(v_1, v_2)$ for $\alpha = 0.95, 0.975, 0.995$ only. How can we find $f_\alpha(v_1, v_2)$ for $\alpha = 0.05, 0.025, 0.01$?
+
+\textbf{Theorem} If $F \sim f(v_1, v_2)$ then $\frac{1}{F} \sim f(v_2, v_1)$
+
+\textbf{Theorem} $f_\alpha(v_1, v_2) = \frac{1}{f_{1-\alpha}(v_2, v_1)}$
+
+\textbf{Proof} 
+$$\alpha = \mathbb{P}(F \leq f_\alpha(v_1, v_2)) = \mathbb{P}(\frac{1}{F} \geq \frac{1}{ f_\alpha(v_1, v_2)})
+= 1- \mathbb{P}(\frac{1}{F} \leq \frac{1}{ f_\alpha(v_1, v_2)}) $$
+$$= 1- \mathbb{P}(F(v_2, v_1) \leq \frac{1}{ f_\alpha(v_1, v_2)}) \Rightarrow f_\alpha(v_1, v_2) = \frac{1}{f_{1-\alpha}(v_2, v_1)}$$
+
+We now have a mean to find $f_\alpha(v_1, v_2)$ for $\alpha = 0.05, 0.025, 0.01$ by the inverse of $f_\alpha(v_2, v_1)$ for $\alpha = 0.95, 0.975, 0.995$\\
+
+\textbf{Example} Inferences for ratio of variances.
+
+Suppose that we have
+$$\begin{cases}
+\mathbb{X}_1, ..., \mathbb{X}_n \overset{i.i.d}{\sim} N(\mu_x, \sigma_x^2) \\
+\mathbb{Y}_1, ..., \mathbb{Y}_m \overset{i.i.d}{\sim} N(\mu_y, \sigma_y^2) 
+\end{cases} \Big\} \text{ independent}$$
+
+Want C.I for $\frac{\sigma_x^2}{\sigma_y^2}$
+
+Recall that we have
+$$\begin{cases}
+\frac{(n-1)\mathbb{S}_x^2}{\sigma_x^2} \sim \chi^2(n-1) \\
+\frac{(n-1)\mathbb{S}_y^2}{\sigma_y^2} \sim \chi^2(m-1)
+\end{cases} \Big\} \text{ independent}$$
+
+$$\Rightarrow F = \frac{\frac{(n-1)\mathbb{S}_x^2}{\sigma_x^2(n-1)}}{\frac{(m-1)\mathbb{S}_y^2}{\sigma_y^2(m-1)}} = \frac{\mathbb{S}_x^2}{\mathbb{S}_y^2} \frac{\sigma_y^2}{\sigma_x^2} \sim f(n-1, m-1)$$
+
+Define $f_{\frac{\alpha}{2}}$ and $f_{1-\frac{\alpha}{2}}$ to be numbers such that:
+$$\frac{\alpha}{2} = \mathbb{P}(\frac{\mathbb{S}_x^2}{\mathbb{S}_y^2} \frac{\sigma_y^2}{\sigma_x^2} \leq f_{\frac{\alpha}{2}}(n-1, m-1))
+= \mathbb{P}(\frac{\mathbb{S}_y^2}{\mathbb{S}_x^2} \frac{\sigma_x^2}{\sigma_y^2} \geq f_{1-\frac{\alpha}{2}}(m-1, n-1))$$
+$$\frac{\alpha}{2} = \mathbb{P}(\frac{\mathbb{S}_x^2}{\mathbb{S}_y^2} \frac{\sigma_y^2}{\sigma_x^2} \geq f_{1-\frac{\alpha}{2}}(n-1, m-1))
+= \mathbb{P}(\frac{\mathbb{S}_y^2}{\mathbb{S}_x^2} \frac{\sigma_x^2}{\sigma_y^2} \leq \frac{1}{f_{1-\frac{\alpha}{2}}(n-1, m-1)})$$
+$$\Rightarrow 1-\alpha = \mathbb{P} (\frac{1}{f_{1-\frac{\alpha}{2}}(n-1, m-1)} \leq \frac{\sigma_x^2}{\sigma_y^2} \leq f_{1-\frac{\alpha}{2}}(m-1, n-1))$$
+
+Therefore the C.I for $\frac{\sigma_x^2}{\sigma_y^2}$ with significance level $\alpha$ is
+$$ (\frac{1}{f_{1-\frac{\alpha}{2}}(n-1, m-1)} , f_{1-\frac{\alpha}{2}}(m-1, n-1)) \blacksquare$$
+
+When UMP not exist, we may not want to derive LR test because it is too complicated in development. For random sample $\mathbb{X}_1, ..., \mathbb{X}_n$, if we have a set  $A(\mathbb{X}_1, ..., \mathbb{X}_n)$ such that 
+$$\alpha = \mathbb{P}((\mathbb{X}_1, ..., \mathbb{X}_n) \in A(\mathbb{X}_1, ..., \mathbb{X}_n) | H_0)$$
+then $A(\mathbb{X}_1, ..., \mathbb{X}_n)$ is critical region of significance level $\alpha$.
+
+\textbf{Example} Hypothesis testing for equality of variance.
+Suppose that we have
+$$\begin{cases}
+\mathbb{X}_1, ..., \mathbb{X}_n \overset{i.i.d}{\sim} N(\mu_x, \sigma_x^2) \\
+\mathbb{Y}_1, ..., \mathbb{Y}_m \overset {i.i.d}{\sim} N(\mu_y, \sigma_y^2)
+\end{cases}$$
+
+We want to test hypothesis $H_0: \sigma_x^2 = \sigma_y^2$ vs $H_1: \sigma_x^2 \neq \sigma_y^2$.
+
+We have seen that $F = \frac{\sigma_x^2}{\sigma_y^2}\frac{\mathbb{S}_y^2}{\mathbb{S}_x^2} \sim f(m-1, n-1)$, and
+$$\frac{\alpha}{2} = \mathbb{P}(\frac{\mathbb{S}_x^2}{\mathbb{S}_y^2} \frac{\sigma_y^2}{\sigma_x^2} \leq f_{\frac{\alpha}{2}}(n-1, m-1) | H_0)
+= \mathbb{P}(\frac{\mathbb{S}_y^2}{\mathbb{S}_x^2} \geq f_{1-\frac{\alpha}{2}}(m-1, n-1))$$
+$$\frac{\alpha}{2} = \mathbb{P}(\frac{\mathbb{S}_x^2}{\mathbb{S}_y^2} \frac{\sigma_y^2}{\sigma_x^2} \geq f_{1-\frac{\alpha}{2}}(n-1, m-1) | H_0)
+= \mathbb{P}(\frac{\mathbb{S}_y^2}{\mathbb{S}_x^2} \leq \frac{1}{f_{1-\frac{\alpha}{2}}(n-1, m-1)})$$
+$$\Rightarrow \alpha = \mathbb{P}(\frac{\mathbb{S}_y^2}{\mathbb{S}_x^2} \leq \frac{1}{f_{1-\frac{\alpha}{2}}(n-1, m-1)} \cup \frac{\mathbb{S}_y^2}{\mathbb{S}_x^2} \geq f_{1-\frac{\alpha}{2}}(m-1, n-1))$$
+A critical region of significance level $\alpha$ for $H_0: \sigma_x^2 = \sigma_y^2$ vs $H_1: \sigma_x^2 \neq \sigma_y^2$ is
+$$C = \Big\{ \frac{\mathbb{S}_y^2}{\mathbb{S}_x^2} \leq \frac{1}{f_{1-\frac{\alpha}{2}}(n-1, m-1)} \cup \frac{\mathbb{S}_y^2}{\mathbb{S}_x^2} \geq f_{1-\frac{\alpha}{2}}(m-1, n-1) \Big\}$$
+
+Actually a test with critical region C is a LRT. But we will not prove it. $\blacksquare$\\
+
+Now we come back to the question of C.I and hypothesis testing for the difference of means.
+
+
+\textbf{Example} Suppose that we have
+$$\begin{cases}
+\mathbb{X}_1, ..., \mathbb{X}_n \overset{i.i.d}{\sim} N(\mu_x, \sigma_x^2) \\
+\mathbb{Y}_1, ..., \mathbb{Y}_m \overset {i.i.d}{\sim} N(\mu_y, \sigma_y^2)
+\end{cases}$$
+
+We want C.I for $\mu_x - \mu_y$ as a test for $H_0: \mu_x = \mu_y$ vs $H_1:\mu_x\neq\mu_y$
+
+Case 1: suppose it is known that $\sigma_x^2 = \sigma_y^2 = \sigma^2$, we have
+$$\mathbb{T} = \frac{\frac{\bar{\mathbb{X}} - \bar{\mathbb{Y}} - (\mu_x-\mu_y)}{\sqrt{\frac{\sigma^2}{n} + \frac{\sigma^2}{m}}}}{\sqrt{\frac{(n-1)\mathbb{S}_x^2 + (m-1)\mathbb{S}_y^2}{\sigma^2 (m+n-2)}}} = \frac{\bar{\mathbb{X}} - \bar{\mathbb{Y}} - (\mu_x-\mu_y)}{\sqrt{\frac{(n-1)\mathbb{S}_x^2 + (m-1)\mathbb{S}_y^2}{(m+n-2)}} \sqrt{\frac{1}{n} + \frac{1}{m}}} \sim t(m+n-2)$$
+
+and $100(1-\alpha)\%$ C.I is
+$$(\bar{\mathbb{X}} - \bar{\mathbb{Y}} - t_{\frac{\alpha}{2}} \sqrt{\cdots}, \bar{\mathbb{X}} - \bar{\mathbb{Y}} + t_{\frac{\alpha}{2}} \sqrt{\cdots})$$
+
+A test of significance level $\alpha$ is
+$$\text{rejecting } H_0 \text{ if } |T| = \frac{|\bar{\mathbb{X}} - \bar{\mathbb{Y}}|}{\sqrt{\cdots}} \geq t_{\frac{\alpha}{2}} $$
+Hence 
+$$\mathbb{P}(\text{Type I error}) = \mathbb{P}( \frac{|\bar{\mathbb{X}} - \bar{\mathbb{Y}}|}{\sqrt{\cdots}} \geq t_{\frac{\alpha}{2}} ) = \alpha$$
+
+Case II: Suppose that we do not know if $\sigma_x = \sigma_y$, so we have
+$$\begin{cases}
+\mathbb{X}_1, ..., \mathbb{X}_n \overset{i.i.d}{\sim} N(\mu_x, \sigma_x^2) \\
+\mathbb{Y}_1, ..., \mathbb{Y}_m \overset {i.i.d}{\sim} N(\mu_y, \sigma_y^2)
+\end{cases}$$
+
+Our interest is C.I for $\mu_x - \mu_y$ as a test for $H_0: \mu_x = \mu_y$ vs $H_1:\mu_x\neq\mu_y$ We consider two situations
+\begin{enumerate}
+\item If sample size $n, m$ are not large ($n, m < 30$), we have two steps to derive C.I and test.
+  \begin{enumerate}
+  \item step 1: Consider $H_0: \sigma_x^2 = \sigma_y^2$ vs $H_1: \sigma_x^2 \neq \sigma_y^2$. We reject $H_0$ if $F = \frac{\mathbb{S}_y^2}{\mathbb{S}_x^2} \leq f_{\frac{\alpha}{2}}(m-1, n-1)$ or $\geq f_{1-\frac{\alpha}{2}}(m-1, n-1)$. If $H_0$ is rejected we consider it is too complicated to derive C.I and a test, we would not further do it. 
+  \item  step 2: If $H_0$ is accepted, then we consider $\sigma_x^2 = \sigma_y^2 = \sigma^2$, and test is derived as above.
+  \end{enumerate}
+\item If sample size is large ($> 30$), then
+$$\bar{\mathbb{X}} \sim N(\mu_x, \sigma_x^2) \text{ and } \bar{\mathbb{Y}} \sim N(\mu_y, \sigma_y^2)$$
+Therefore
+$$T = \frac{\bar{\mathbb{X}} - \bar{\mathbb{Y}} - (\mu_x - \mu_y)}{\sqrt{\frac{\mathbb{S}_x^2}{n} + \frac{\mathbb{S}_y^2}{m}}} \overset{d}{\to} N(0, 1)$$
+\end{enumerate}
+
+So
+$$1-\alpha = \mathbb{P}(-\zeta_{\frac{\alpha}{2}} \leq \mathbb{Z} \leq \zeta_{\frac{\alpha}{2}})
+\cong \mathbb{P}(-\zeta_{\frac{\alpha}{2}} \leq \frac{\bar{\mathbb{X}} - \bar{\mathbb{Y}} - (\mu_x - \mu_y)}{\sqrt{\frac{\mathbb{S}_x^2}{n} + \frac{\mathbb{S}_y^2}{m}}}  \leq \zeta_{\frac{\alpha}{2}})$$
+$$= \mathbb{P}( \bar{\mathbb{X}} - \bar{\mathbb{Y}} - \zeta_{\frac{\alpha}{2}} \sqrt{\cdots} \leq \mu_x - \mu_y \leq \bar{\mathbb{X}} - \bar{\mathbb{Y}} - \zeta_{\frac{\alpha}{2}} \sqrt{\cdots} )$$
+
+We now consider hypothesis $H_0: \mu_x = \mu_y$ vs $H_1: \mu_x \neq \mu_y$. We have $T = \frac{\bar{\mathbb{X}} - \bar{\mathbb{Y}} }{\sqrt{\frac{\mathbb{S}_x^2}{n} + \frac{\mathbb{S}_y^2}{m}}} \overset{d}{\to} N(0, 1) $, we consider that rejecting $H_0$ if 
+$$|T| = \frac{|\bar{\mathbb{X}} - \bar{\mathbb{Y}}|}{\sqrt{\cdots}} \geq \zeta_{\frac{\alpha}{2}} $$
+Hence 
+$$\mathbb{P}(\text{Type I error}) = \mathbb{P}( \frac{|\bar{\mathbb{X}} - \bar{\mathbb{Y}}|}{\sqrt{\cdots}} \geq \zeta_{\frac{\alpha}{2}} ) 
+= 1 - \mathbb{P}( \frac{|\bar{\mathbb{X}} - \bar{\mathbb{Y}}|}{\sqrt{\cdots}} \leq \zeta_{\frac{\alpha}{2}} )
+\cong \mathbb{P} (\mathbb{Z} \leq  \zeta_{\frac{\alpha}{2}}) = \alpha$$
+This is a test of significance level $\alpha$.
+
+Hypothesis Testing for $p$ (probability of success). $\mathbb{Y} \sim Binomial(n, p)$, want a test for $H_0: p = p_0$ vs $H_1: p \neq p_0$. 
+Let $\mathbb{Y}_1, ..., \mathbb{Y}_n \overset{i.i.d}{\sim} Bernoulli(p)$, and $\hat{\mathbb{Y}} = \frac{\mathbb{Y}}{n} \overset{\mathbb{P}}{\to} p$.
+$$\text{ by C.L.T  } \frac{\hat{p} - p}{\sqrt{\frac{p(1-p)}{n}} } =  \frac{\frac{\sum \mathbb{Y}_i}{n} - p}{\sqrt{\frac{p(1-p)}{n}} } \overset{\mathbb{P}}{\to} N(0, 1)$$
+$$\frac{\hat{p} - p}{\sqrt{\frac{\hat{p}(1-\hat{p})}{n}} } = \frac{\hat{p} - p}{\sqrt{\frac{p(1-p)}{n}} } \sqrt{\frac{p(1-p)}{\hat{p}(1-\hat{p})}} \overset{\mathbb{P}}{\to} N(0, 1) \text{ by Slutsky theorem}$$
+
+Under $H_0$, 
+$$\frac{\hat{p} - p_0}{\sqrt{\frac{\hat{p}(1-\hat{p})}{n}} } \overset{\mathbb{d}}{\to} N(0, 1) $$
+So
+$$1-\alpha = \mathbb{P}(-\zeta_{\frac{\alpha}{2}} \leq \mathbb{Z} \leq \zeta_{\frac{\alpha}{2}})$$
+$$\Rightarrow \alpha = \mathbb{P} (|\mathbb{Z}| \geq \zeta_{\frac{\alpha}{2}})
+= \mathbb{P} ( |\frac{\hat{p} - p_0}{\sqrt{\frac{\hat{p}(1-\hat{p})}{n}} }| \geq \zeta_{\frac{\alpha}{2}} )$$
+So one appropriate test for significance level $\alpha$ is rejecting $H_0$ if $ \frac{|\hat{p} - p_0|}{\sqrt{\frac{\hat{p}(1-\hat{p})}{n}} } \geq \zeta_{\frac{\alpha}{2}}$
+
+Difference of $p$'s: Suppose that we have $\begin{cases}
+\mathbb{X} \sim binomial(n, p_1) \\
+\mathbb{Y} \sim binomial(m, p_2)
+\end{cases}$
+
+Want C.I for $p_1 - p_2$ and test for for $H_0: p_1 = p_2$ vs $H_1: p_1 \neq p_2$.
+
+Let $\hat{p_1} = \frac{\mathbb{X}}{n}$, and $\hat{p_2} = \frac{\mathbb{Y}}{m}$, by CLT
+
+$\begin{cases}
+\frac{\hat{p_1} - p_1}{\sqrt{\frac{p_1 (1-p_1)}{n}}} \overset{\mathbb{d}}{\to} N(0, 1) \\
+\frac{\hat{p_2} - p_2}{\sqrt{\frac{p_2 (1-p_2)}{m}}} \overset{\mathbb{d}}{\to} N(0, 1)
+\end{cases} \Rightarrow \begin{cases}
+\hat{p_1} \overset{\mathbb{d}}{\to} N(p_1, \frac{p_1 (1-p_1)}{n}) \\
+\hat{p_2} \overset{\mathbb{d}}{\to} N(p_2, \frac{p_2 (1-p_2)}{m})
+\end{cases}$
+$$\Rightarrow \hat{p_1}  - \hat{p_2} \cong N(p_1 - p_2, \frac{p_1 (1-p_1)}{n} + \frac{p_2 (1-p_2)}{m})$$
+$$\Rightarrow \frac{\hat{P}_1 - \hat{P}_2 - (p_1 - p_2)}{\sqrt{\frac{\hat{P}_1(1-\hat{P}_1) + \hat{P}_2(1-\hat{P}_2)}{n}}} \cong N(0, 1)$$
+Since
+$$1-\alpha = \mathbb{P}(-\zeta_{\frac{\alpha}{2}} \leq \mathbb{Z} \leq \zeta_{\frac{\alpha}{2}})$$
+$$\Rightarrow \alpha = \mathbb{P} (|\mathbb{Z}| \geq \zeta_{\frac{\alpha}{2}})
+= \mathbb{P}(\frac{|\hat{P}_1 - \hat{P}_2 - (p_1 - p_2)|}{\sqrt{\frac{\hat{P}_1(1-\hat{P}_1) + \hat{P}_2(1-\hat{P}_2)}{n}}}\geq \zeta_{\frac{\alpha}{2}})$$
+under $H_0$
+$$ \alpha = \mathbb{P}(\frac{|\hat{P}_1 - \hat{P}_2|}{\sqrt{\frac{\hat{P}_1(1-\hat{P}_1) + \hat{P}_2(1-\hat{P}_2)}{n}}}\geq \zeta_{\frac{\alpha}{2}})$$
+Therefore an approximate test of significance level $\alpha$ is rejecting $H_0$ if $\frac{|\hat{P}_1 - \hat{P}_2|}{\sqrt{\frac{\hat{P}_1(1-\hat{P}_1) + \hat{P}_2(1-\hat{P}_2)}{n}}}\geq \zeta_{\frac{\alpha}{2}}$.

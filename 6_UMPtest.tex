@@ -1,0 +1,136 @@
+\section{UMP test}
+\textbf{Definition} A test with critical region $C$ is called a uniformly most powerful (UMP) test of significance level (size) $\alpha$ for hypothesis 
+$$H_0: \theta = \theta_0, H_1: \theta = \Theta_1$$
+If for $\theta_1 \in \Theta_1$, $C$ is the most powerful critical region of significance level $\alpha$ for $H_0: \theta = \theta_0, H_1: \theta = \theta_1$
+
+By Neyman-Pearson theorem, MP critical region for $H_0: \theta = \theta_0, H_1: \theta = \theta_1$ is
+$$C = \{ \underline{x} | \frac{L(\theta_0, \underline{x})}{L(\theta_1, \underline{x})} \leq k \} = \{u(\underline{\mathbb{X}}) \leq c \}$$
+Suppose $C$ is independent of $\theta_1 \in \Theta_1$, then $C$ is UMP critical region.
+
+For example, from previous analysis we see if have $\mathbb{X}_1, ..., \mathbb{X}_n$ be a random sample from $N(\mu, \sigma^2)$ where $\sigma^2$  is known. MP critical region for $H_0: \mu = 0, H_1: \mu = \mu_1 > 0$ is $C = \{ \sum \mathbb{X}_i \geq \sqrt{n}\zeta_\alpha\}$. This is independent of $\mu = \mu_1$ when $\mu_1 > 0$, so $C$ is UMP critical region for $H_0: \mu = 0, H_1: \mu > 0$.\\
+
+Usually UMP test exists for one sided hypothesis:
+\begin{enumerate}
+\item $H_0: \mu = 0$ vs $H_1: \mu > 0$
+\item $H_0: \mu = 0$ vs $H_1: \mu < 0$
+\end{enumerate}
+
+And UMP test not exist for two sided hypothesis
+$H_0: \mu = 0$ vs $H_1: \mu \neq 0$\\
+
+\textbf{Example} Let $\mathbb{X}_1, ..., \mathbb{X}_n$ be a random sample from $N(\mu, 1)$, we consider UMP test for $H_0: \mu = 0$ vs $H_1: \mu > 0$.
+
+\textbf{Solution} Let $\mu_1 > 0$, we consider simple hypothesis $H_0: \mu = 0$ vs $H_1: \mu = \mu_1$. For MP test, the likelihood ratio
+$$\frac{L(0, x_1, ..., x_n)}{L(\mu_1, x_1, ..., x_n)} \leq k = e^{-\mu_1 \sum x_i + \frac{n}{2} \mu_1^2} \leq k$$
+$$\iff \sum x_i \geq \frac{\ln k - \frac{n}{2}\mu_1^2}{-\mu_1} = c$$
+And let $R = \{ \sum \mathbb{X}_i > c \}$ be the rejection region
+$$\Rightarrow \alpha = \mathbb{P}( \sum \mathbb{X}_i > c | \mu = 0 ) = 
+\mathbb{P}( \bar{\mathbb{X}} > \frac{c}{n} | \mu = 0 ) = \mathbb{P}( \frac{\bar{\mathbb{X}} - 0}{\frac{1}{\sqrt{n}}} \geq \frac{c}{\sqrt{n}})$$
+$$= \mathbb{P}(\mathbb{Z} \geq \frac{c}{\sqrt{n}}) \Rightarrow c = \sqrt{n}\zeta_{\alpha}$$
+
+Notice the above $c$ is independent of $\mu_1$ is because $\mu_1$ is always greater than 0. $\mu_1 > 0$ is the reason why $\sum x_i \geq \frac{\ln k - \frac{n}{2}\mu_1^2}{-\mu_1} = c$ is consistently true. If $\mu_1 \neq 0$ and $\mu_1$ could be positive or negative, then
+$$\begin{cases}
+\sum x_i \geq \frac{\ln k - \frac{n}{2}\mu_1^2}{-\mu_1} = c & \text{for } \mu_1 >  0 \\
+\sum x_i \leq \frac{\ln k - \frac{n}{2}\mu_1^2}{-\mu_1} = c & \text{for } \mu_1 <  0
+\end{cases} \text{is dependent on } \mu_1$$
+$\blacksquare$
+
+\textbf{Example} Let $\mathbb{X}_1, ..., \mathbb{X}_n$ be a random sample from $N(0, \sigma^2)$, want UMP critical region for $H_0: \sigma^2 = 1$ vs $H_1: \sigma^2 < 1$.
+
+\textbf{Solution} Let $\theta < 1$, we consider first MP critical region for simple hypothesis $H_0: \sigma^2 = 1$ vs $H_1: \sigma^2 = \sigma_1^2$, where $\sigma_1^2 < 1$. By Neyman-Pearson theorem, we want the likelihood ratio
+$$\frac{L(\sigma^2 = 1, x_1, ..., x_n)}{L(\sigma^2 = \sigma_1^2, x_1, ..., x_n)} = \sigma_1^{\frac{n}{2}}\frac{e^{-\frac{\sum x_i^2}{2}}}{e^{-\frac{\sum x_i^2}{2\sigma_1^2}}}
+= \sigma_1^{\frac{n}{2}} e^{-\frac{\sum x_i^2}{2} (1-\frac{1}{\sigma_1^2})} < k$$
+$$\iff \sum_i x_i^2 \leq (\ln(k) - \frac{n}{2}\ln(\sigma_1)) \frac{1-\frac{1}{\sigma_1^2}}{2} = c$$
+$$\Rightarrow \alpha = \mathbb{P}(\sum_i \mathbb{X}_i^2 < c | H_0) = \mathbb{P}(\chi^2(n) < c ) \Rightarrow c = \chi^2_\alpha$$
+
+This critical region is independent of $H_1 = \sigma^2 = \sigma_1^2$, hence $\{ \sum_i^n \mathbb{X}_i^2 < c | H_0 \}$ is UMP critical region of significance level $\alpha$ for $H_0: \sigma^2 = 1$ vs $H_1: \sigma^2 < 1$.
+
+\textbf{Example} Let $\mathbb{X}_1, ..., \mathbb{X}_n$ be a random sample from $Poisson(\lambda)$. We consider $H_0: \lambda = 1$ vs $H_1: \lambda \neq 1$.
+
+\textbf{Solution} Consider simple hypothesis $H_0: \lambda = 1$ vs $H_1: \lambda = \lambda_1 \neq 1$. The likelihood ratio is
+$$\frac{L(0, x_1, ..., x_n)}{L(\mu_1, x_1, ..., x_n)} = e^{-n(1-\lambda_1) \lambda_1^{\sum x_i \leq k}}$$
+$$\Rightarrow
+\begin{cases}
+\sum x_i \geq \frac{ln(\frac{k}{e^{n(1-\lambda_1)}})}{-\ln \lambda_1} & \text{if } \lambda_1 > 1 \\
+\sum x_i \leq \frac{ln(\frac{k}{e^{n(1-\lambda_1)}})}{-\ln \lambda_1} & \text{if } \lambda_1 < 1
+\end{cases}$$
+
+Therefore the rejection region depends on $\lambda_1$, and UMP does not exist. $\blacksquare$\\
+
+The following  types of hypothesis will all be considered:
+\begin{enumerate}
+\item $H_0: \theta = \theta_0$ vs $H_1: \theta = \theta_1$
+
+MP test always exist by Neyman-Pearson theorem.
+\item $H_0: \theta = \theta_0$ vs $H_1: \theta > \theta_0$
+
+UMP test exits for some distribution that can be derived from Neyman-Pearson theorem.
+\item $H_0: \theta = \theta_0$ vs $H_1: \theta \neq \theta_0$
+
+UMP test usually do not exist.
+\item $H_0: \theta \leq \theta_0$ vs $H_1: \theta > \theta_0$
+\end{enumerate}
+
+Consider the last type of testing, we need to define the UMP test for it first.
+
+Suppose that we consider hypothesis $H_0: \theta \in \Theta_0$ vs $H_1: \theta \in \Theta_1$. For critical region
+ C with power function $\pi_C (\theta) = \mathbb{P}(\underline{\mathbb{X}}\in C | \theta)$. Recall that the size of C is defined as $\underset{\theta \in \Theta_0}{\sup} \pi_C (\theta)$.
+ 
+\textbf{Definition} Consider composite hypothesis $H_0: \theta \in \Theta_0$ vs $H_1: \theta \in \Theta_1$. A test with critical region C is called a UMP test of significance level $\alpha$, if it satisfies
+\begin{enumerate}
+\item $\underset{\theta \in \Theta_0}{\sup} \pi_C (\theta) = \alpha$ (size of C is $\alpha$)
+\item For any critical region A such that $\underset{\theta \in \Theta_0}{\sup}\pi_A(\theta) \leq \alpha$, we have
+$$\pi_C(\theta) \geq \pi_A(\theta) \text{ for all } \theta \in \Theta_1$$
+\end{enumerate}
+
+\textbf{Definition} A family of densities $\{ f(\theta, x_1, ..., x_n) | \theta \in \Theta \}$ is said to have a monotone likelihood ratio (MLR) if, for $\theta' < \theta''$, there exists  a statistics $T = t(\mathbb{X}_1, ..., \mathbb{X}_n)$ such that the likelihood ratio
+$$\frac{L(\theta', x_1, ..., x_n)}{L(\theta'', x_1, ..., x_n)} = h(T)$$
+is either nondecreasing or nonincreasing w.r.t T.
+
+There are two types of hypothesis, $H_0: \theta \leq \theta_0$ vs $H_1: \theta > \theta_0$, and $H_0: \theta \geq \theta_0$ vs $H_1: \theta < \theta_0$. There are also two types of monotonicity. Hence we have to construct UMP critical region.
+
+Note: Suppose that we consider one-sided hypothesis $H_0: \theta \leq \theta_0$ vs $H_1: \theta > \theta_0$ and there is MLR, then the UMP critical region C has monotone power function. This indicates that the size of C is
+$$\text{size } = \underset{\theta \leq\theta_0}{\sup} \pi_C(\theta) = \pi_C(\theta_0) = \mathbb{P}((\mathbb{X}_1, ..., \mathbb{X}_n) \in C | \theta_0)$$
+
+\textbf{Theorem} Suppose the family of densities has a MLR in $Y = t(\mathbb{X}_1, ..., \mathbb{X}_n)$.
+
+(a) Consider hypothesis $H_0: \theta \leq \theta_0$ vs $H_1: \theta > \theta_0$. For $\theta' < \theta''$, if LR $ = \frac{L(\theta')}{L(\theta'')} = h(T)$ is non-decreasing in T, then the UMP critical region of significance level $\alpha$ is $C = \{T\leq t_0\}$ s.t
+$$\alpha = \underset{\theta \leq\theta_0}{\sup} \mathbb{P}(T\leq t_0 | \theta) = \mathbb{P}(T\leq t_0 | \theta_0)$$
+
+If  LR $ = \frac{L(\theta')}{L(\theta'')} = h(T)$ is non-increasing in T, the the UMP critical region of significance level $\alpha$ is $C = \{T\geq t_0\}$ s.t
+$$\alpha = \underset{\theta \leq\theta_0}{\sup} \mathbb{P}(T\geq t_0 | \theta) = \mathbb{P}(T\geq t_0 | \theta_0)$$
+
+(b) Consider hypothesis $H_0: \theta \geq \theta_0$ vs $H_1: \theta < \theta_0$. For $\theta' < \theta''$, if LR $ = \frac{L(\theta')}{L(\theta'')} = h(T)$ is non-decreasing in T, then the UMP critical region of significance level $\alpha$ is $C = \{T\geq t_0\}$ s.t
+$$\alpha = \underset{\theta \geq\theta_0}{\sup} \mathbb{P}(T\geq t_0 | \theta) = \mathbb{P}(T\geq t_0 | \theta_0)$$
+
+If  LR $ = \frac{L(\theta')}{L(\theta'')} = h(T)$ is non-increasing in T, the the UMP critical region of significance level $\alpha$ is $C = \{T\leq t_0\}$ s.t
+$$\alpha = \underset{\theta \geq\theta_0}{\sup} \mathbb{P}(T\leq t_0 | \theta) = \mathbb{P}(T\leq t_0 | \theta_0)$$
+
+\textbf{Example} Let  $\mathbb{X}_1, ..., \mathbb{X}_n$ be a random sample from $U(0, \theta)$. We consider UMP test for $H_0: \theta \leq \theta_0$ vs $H_1: \theta > \theta_0$.
+
+\textbf{Solution} The p.d.f of $\mathbb{X}$ is $f(x, \theta) = \frac{1}{\theta}I(0<x<\theta)$ So the likelihood function is
+$$L(\theta) = \prod_{i=1}^n \frac{1}{\theta}I(0<x_i<\theta) = \frac{1}{\theta^n}  \prod_{i=1}^nI(0<x_i<\theta) = \frac{1}{\theta^n}I(0<y_n<\theta)$$
+where $y_n = max\{x_1, ..., x_n\}$. For $\theta' < \theta''$, the likelihood ratio is 
+$$\frac{L(\theta')}{L(\theta'')} = \frac{\theta''^n I(0<y_i<\theta')}{\theta'^n I(0<y_i<\theta'')}
+=\begin{cases}
+(\frac{\theta''}{\theta'})^n & \text{if } 0 < y_n < \theta' \\
+0 & \text{if } \theta' \leq y_n < \theta'' 
+\end{cases}$$
+
+This is MLR in $\mathbb{Y}_n = max\{\mathbb{X}_1, ..., \mathbb{X}_n\}$. The UMP critical region is $C = \{ \mathbb{Y}_n \geq c \}$. The pdf of $\mathbb{Y}_n$ is
+$$f_{\mathbb{Y}_n}(y) = n(F(y))^{n-1}f(y) = n(\frac{y}{\theta})^{n-1}\frac{1}{\theta} = n\frac{y^{n-1}}{\theta^n}, 0 < y < \theta$$.
+$$\alpha = P(\mathbb{Y}_n \geq c | \theta = \theta_0) = \int_c^{\theta_0} n\frac{y^{n-1}}{\theta^n} dy = 1 - \frac{c^n}{\theta_0^n}$$
+$$\Rightarrow c = \theta_0(1-\alpha)^{\frac{1}{n}}$$
+
+The UMP critical region of significance level $\alpha$ is $C = \{ \mathbb{Y}_n \geq  \theta_0(1-\alpha)^{\frac{1}{n}} \}$. $\blacksquare$
+
+\textbf{Example} Let  $\mathbb{X}_1, ..., \mathbb{X}_n$ be a random sample from $N(\mu, 1)$, want  UMP test for $H_0: \mu \geq 0$ vs $H_1: \mu< 0$.
+
+\textbf{Solution} For $\mu' < \mu''$, the likelihood ratio
+$$\frac{L(\mu')}{L(\mu'')} = \frac{e^{-\frac{1}{2}\sum (x_i - \mu')^2}}{e^{-\frac{1}{2}\sum (x_i - \mu'')^2}}
+= e^{-\frac{1}{2}[2(\mu''-\mu')\sum x_i + n (\mu'^2 - \mu''^2)]}$$
+is non-increasing in $\sum x_i$. So the UMP critical region is $C = \{ \bar{\mathbb{X}} \leq c\}$
+$$\alpha = \mathbb{P}( \bar{\mathbb{X}} \leq c | \mu = 0)  = \mathbb{P}(\sqrt{n}  \bar{\mathbb{X}} < \sqrt{n}c)
+\Rightarrow c = \frac{-\zeta_\alpha}{\sqrt{n}}$$
+
+And he UMP critical region of significance level $\alpha$ is $C = \{ \mathbb{Y}_n \leq  \frac{-\zeta_\alpha}{\sqrt{n}} \}$

@@ -1,0 +1,30 @@
+\section{Appendix}
+\title{\textbf{{\LARGE Appendix\\}}}
+
+Appendix provides proof to harder theorems. Some of which require background in analysis.\\
+
+
+\paragraph{ A.1 \ \  Interchanging Differentiation and Integration}
+If f(x, t) is a function of two variables, satisfying the following 3 conditions:\\
+(1) f(x, t) exists on a closed cell $[a, b] \times [c, d]$\\
+(2) $\forall_{t\in[c, d] }\ \ \int_a^b f(x, t) \mathrm{d}x$ exists\\
+(3) Given $s \in (c, d)$, for any $\epsilon > 0$ corresponds a $\delta$ such that $$ | \mathrm{D}_2 f(x, t) - \mathrm{D}_2 f(x, s) | \leq \epsilon \text{ for all } x \in [a, b] \text{ and } | t - s | \leq \delta $$
+where $\mathrm{D}_2 f(x, s)$ means the derivative of f with respect to its second variable at s.
+Then $\mathrm{D}_2 \int_a^b f(x, s) \mathrm{d}x = \int_a^b \mathrm{D}_2 f(x, s) \mathrm{d}x$ (This means, of course, $D_2 \int_a^b f(x, s) \mathrm{d}x $ and $ \int_a^b D_2 f(x, s) \mathrm{d}x$ exist).\\
+
+\textbf{Proof} If we let
+$$g_t(x) = \frac{f(x, t)-f(x, s)}{t-s}$$
+then by mean value theorem, there exist $u$ between $s$ and $t$, such that
+$$g_t(x)= \mathrm{D}_2 f(x, u)$$
+So if $|t-s|\leq\delta$, $ |g_t(x) - \mathrm{D}_2 f(x, s) | \leq \epsilon $ for all $x \in [a, b]$ by condition (3). Therefore $g_t(x)\to \mathrm{D}_2 f(x, s)$ uniformly on $[a, b]$ as $t\to s$.
+
+Since $g_t(x)\to \mathrm{D}_2 f(x, s)$ uniformly on $[a, b]$ as $t\to s$,
+$$\lim_{t\to s}\int_a^b g_t(x) \mathrm{d}x = \int_a^b \lim_{t\to s} g_t(x) \mathrm{d}x $$
+$$\lim_{t\to s}\int_a^b g_t(x) = \lim_{t\to s}\int_a^b \frac{f(x, t)-f(x, s)}{t-s} \mathrm{d}x = \lim_{t\to s} \frac{\int_a^b f(x, t) \mathrm{d}x - \int_a^b f(x, s) \mathrm{d}x}{t-s}$$
+$$ = \mathrm{D}_2 \int_a^b f(x, t) \mathrm{d}x
+= \int_a^b \lim_{t\to s} g_t(x) \mathrm{d}x = \int_a^b \mathrm{D}_2 f(x, s) \mathrm{d}x $$\\
+
+\textbf{Remark}
+If $D_2 f$ is continuous on $[a, b]\times [c, d]$, condition (3) holds. Because for every $\epsilon$, corresponds a $\delta$, such that
+
+\paragraph{ A.2 \ \  Holder's inequality\\}

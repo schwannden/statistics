@@ -1,0 +1,376 @@
+\section{Hypothesis Testing}
+In this class we will introduce confidence interval (C.I), and hypothesis testing. Before this, we have to introduce a real distribution.
+
+\textbf{Definition} (t-distribution) Suppose that we have
+$$
+\begin{cases}
+\mathbb{Z} \sim \mathbb{N}(0, 1) \\
+\mathbb{V} \sim \mathbb{\chi}^2(r)
+\end{cases}
+$$
+, and the two r.v are independent. We say that $\mathbb{T} = \frac{\mathbb{Z}}{\sqrt{\mathbb{V}/r}}$ has a t-distribution with d.f.r.
+
+We also denote $\mathbb{T}\sim t(r)$.
+
+\textbf{Theorem} If  $\mathbb{T}\sim t(r)$, its p.d.f is
+$$f_\mathbb{T}(t) = \frac{\Gamma(\frac{r+1}{2})}{\sqrt{\pi r}\Gamma(\frac{r}{2})(1+\frac{t^2}{r})^\frac{r+1}{2}}, t\in\mathbb{R}$$
+
+\textbf{Proof} Since $\mathbb{T}\sim t(r)$, $\mathbb{T} = \frac{\mathbb{Z}}{\sqrt{\mathbb{V}/r}}$. The joint p.d.f of $\mathbb{Z}$ and $\mathbb{V}$ is
+
+$$f_{\mathbb{Z}\mathbb{V}}(\zeta, v) = 
+\frac{1}{\sqrt{2\pi}} e^{-\frac{\zeta^2}{2}} \frac{1}{\Gamma(\frac{r}{2})2^{\frac{r}{2}}}v^{\frac{r}{2}-1}e^{-\frac{v}{2}}
+, \zeta\in\mathbb{R}, v>0 $$
+
+We consider transformation $\mathbb{T} = \frac{\mathbb{Z}}{\sqrt{\mathbb{V}/r}}$, $\mathbb{U} = \mathbb{V}$, we have
+$$A = \big\{ {\zeta \choose v}: \zeta\in\mathbb{R}, v>0 \big\} \overset{{\mathbb{T} \choose \mathbb{U}}}{\to} B \big\{ {t \choose u}:t\in\mathbb{R}, u>0 \big\}$$
+
+For ${t \choose u} \in B$, we have inverses $v=u, \zeta=\frac{\sqrt{u}t}{\sqrt{r}}$. Unique solution indicates 1-1 transformation. Jacobian is
+$$J = 
+\begin{vmatrix}
+\frac{\partial \zeta}{\partial t} & \frac{\partial \zeta}{\partial u} \\
+\frac{\partial v}{\partial t} & \frac{\partial v}{\partial u}
+\end{vmatrix} = 
+\begin{vmatrix}
+\frac{\sqrt{u}}{\sqrt{r}} & \frac{u^{-\frac{1}{2}}t}{2\sqrt{r}} \\
+0 & 1
+\end{vmatrix}
+= \frac{\sqrt{u}}{\sqrt{r}}$$
+
+The joint p.d.f of $\mathbb{T}$ and $\mathbb{U}$ is
+$$f_{\mathbb{T}\mathbb{U}} = f_{\mathbb{Z}\mathbb{V}}(\frac{\sqrt{u}t}{\sqrt{r}}, u)\frac{\sqrt{u}}{\sqrt{r}} = 
+\frac{1}{\sqrt{2\pi}} e^{-\frac{1}{2}\frac{u}{r}t^2} \frac{1}{\Gamma(\frac{r}{2})2^{\frac{r}{2}}}u^{\frac{r}{2}-1}e^{-\frac{u}{2}}\frac{\sqrt{u}}{\sqrt{r}}$$
+
+So
+
+$$\mathbb{T} = \frac{1}{\sqrt{2\pi r}} \frac{1}{\Gamma(\frac{r}{2})2^{\frac{r}{2}}}
+\int_0^\infty e^{-\frac{1}{2}(1+\frac{t^2}{r})u} u^{\frac{r+1}{2}-1}\mathrm{d}u$$
+$$= \frac{1}{\sqrt{\pi r}\Gamma(\frac{r}{2})2^{\frac{r+1}{2}}} \frac{1}{(\frac{1}{2}(1+\frac{t^2}{r}))^{\frac{r+1}{2}}}
+\int_0^\infty (\frac{1}{2}(1+\frac{t^2}{r}))^{\frac{r+1}{2}}e^{-\frac{1}{2}(1+\frac{t^2}{r})u} u^{\frac{r+1}{2}-1}\mathrm{d}u$$
+$$= \frac{\Gamma(\frac{r+1}{2})}{\sqrt{\pi r}\Gamma(\frac{r}{2})(1+\frac{t^2}{r})^{\frac{r+1}{2}}}$$
+
+Note that $ f_T(-t) = f_T(t)$, for $t>0 \Rightarrow f_T(t)$ is symmetric at $t=0$
+
+
+\subsection{Confidence Interval}
+The problem in statistics is that we have a random sample $\mathbb{X}_1, ..., \mathbb{X}_n$ from $f(x, \theta)$, where $\theta$ is unknown parameter. The point estimate wants to know what is $\theta$ by defining estimation $\hat{\theta} = \hat{\theta}(\mathbb{X}_1, ..., \mathbb{X}_n)$. Although we can find unknown $\theta$ on consistent estimation, or even UMVUE. However, if $\hat{\theta}(\mathbb{X}_1, ..., \mathbb{X}_n)$ has a continuous distribution, we have $\mathbb{P}_\theta(\hat{\theta}(\mathbb{X}_1, ..., \mathbb{X}_n) = \theta) = 0$ for $\theta \in \Theta$.
+
+There is no confidence to claim that $\theta = \hat{\theta}$. We then want one approach that assume some confidence for $\theta$.
+
+\textbf{Definition} Suppose we hae a random sample from $f(x, \theta)$. If there are two statistics $T_1 = t_1(\mathbb{X}_1, ..., \mathbb{X}_2)$ and 
+$T_2 = t_2(\mathbb{X}_1, ..., \mathbb{X}_2)$ s.t
+$$1-\alpha = \mathbb{P}_\theta(T_1 \leq \theta \leq T_2)$$
+We call the random interval $(T_1, T_2)$ a $100(1-\alpha)\%$ \textbf{confidence interval} for $\theta$. We also call $(t_1(\mathbb{X}_1, ..., \mathbb{X}_2), t_2(\mathbb{X}_1, ..., \mathbb{X}_2))$ a $100(1-\alpha)\%$ C.I interval for $\theta$.
+
+Interpretation of C.I:
+
+
+(a) A $100(1-\alpha)\%$ C.I $(T_1,T_2)$ means that it covers the unknown $\theta$ with probability $1-\alpha$. If we sample $\mathbb{X}_1, ..., \mathbb{X}_n$ many times,
+then the average $$\frac{1}{m} \sum_{j=1}^m I(t_1^{(j)} \leq \theta \leq t_2^{(j)}) \sim 1-\alpha$$
+Where $m$ is the number of times we do the experiment, and $(t_1^{(j)}, t_2^{(j)})$ is the interval calculated from statistics $(T_1,T_2)$ based on the $j$th observation of $\mathbb{X}_1, ..., \mathbb{X}_n$.
+
+(b) If $T_1 = t_1, T_2 = t_2$ is observed (once),
+ then $\mathbb{P}_\theta (t_1 \leq \theta \leq t_2)$ is $0$ or $1$.
+
+\subsubsection{How to construct C.I} 
+
+\textbf{Definition} A function of random sample and parameter $\theta$,
+ $ \mathbb{Q} = q( \mathbb{X}_1, ..., \mathbb{X}_n, \theta)$ is called a \textbf{pivotal quantity} if its distribution is independent of $\theta$.
+
+So a pivotal quantity may depends on $\theta$, while its distribution is independent of $\theta$. In contrast, a statistics is not dependent on $\theta$, while its distribution might.
+
+For each pivotal quantity $\mathbb{Q} = q( \mathbb{X}_1, ..., \mathbb{X}_n, \theta)$, 
+there are $a, b \in \mathbb{R}$ such that $$ 1-\alpha = \mathbb{P}_\theta (a \leq q( X_1... X_n, \theta) \leq b)$$ for $\theta \in \Theta$. Not all pivotal quantity can be used to construct C.I
+ 
+The interesting pivotal quantity is one which 1-1 transformation as:
+$$a \leq q(\mathbb{X}_1, ..., \mathbb{X}_n, \theta) \leq b \text{ if and only if } T_1 \leq \theta \leq T_2$$
+for some statistics $T_1 = t_1 (\mathbb{X}_1, ..., \mathbb{X}_n)$ and $T_2 = t_2 (\mathbb{X}_1, ..., \mathbb{X}_n)$.
+
+Hence, $1 -\alpha = \mathbb{P}_\theta (a \leq q(\mathbb{X}_1, ..., \mathbb{X}_n, \theta) \leq b) = \mathbb{P}_\theta (T_1 \leq \theta \leq T_2)$ and $(T_1, T_2)$ is a $100(1-\alpha)\%$ C.I for $\theta$.\\
+
+In the following examples, Let $\mathbb{Z}$ be the r.v. with standard normal distribution $\mathbb{N}(0,1)$.
+Denote $\zeta_\alpha$ with $\alpha = \mathbb{P}(\mathbb{Z} \geq \zeta_\alpha)$ 
+or $1-\alpha = \mathbb{P}(\mathbb{Z} \leq \zeta_\alpha)$. 
+We need $\zeta_\alpha$ since it satisfies $1-\alpha = \mathbb{P}(-\zeta_{\frac{\alpha}{2}}\leq \mathbb{Z} \leq \zeta_{\frac{\alpha}{2}})$.
+
+\subsubsection{C.I for normal mean}
+
+Let $\mathbb{X}_1, ..., \mathbb{X}_n$ be random samples from $\mathbb{N}(\mu,\sigma^2)$, 
+we want for $100(1-\alpha)\%$ C.I for $\mu$. We consider two cases\\
+
+\textbf{ Case 1 }: $\sigma = \sigma_0$ is known.
+
+We have $\mathbb{X}_1, ..., \mathbb{X}_n \overset{i.i.d}{\sim} \mathbb{N}(\mu, \sigma^2)$ where $\sigma^2$ is known constant.
+$$\bar{\mathbb{X}} \sim \mathbb{N}(\mu, \frac{\sigma_0^2}{n}) \Rightarrow 
+\bar{\mathbb{X}} - \mu \sim \mathbb{N}(0, \frac{\sigma^2}{n}) \Rightarrow
+\frac{(\bar{\mathbb{X}} - \mu) \sqrt{n}}{\sigma_0} \sim N(0, 1)$$
+Notice here $\frac{(\bar{\mathbb{X}} - \mu) \sqrt{n}}{\sigma_0}$ is our pivoted quantity, because the distribution of $\frac{(\bar{\mathbb{X}} - \mu) \sqrt{n}}{\sigma_0}$ is easily obtained and it can be 1 - 1 corresponded to the statistics we seek:
+$$\Rightarrow 1-\alpha = \mathbb{P}(-\zeta_{\frac{\alpha}{2}} \leq \mathbb{Z} \leq \zeta_{\frac{\alpha}{2}})
+= \mathbb{P}(-\zeta_{\frac{\alpha}{2}} \leq \frac{(\bar{\mathbb{X}} - \mu) \sqrt{n}}{\sigma_0} \leq \zeta_{\frac{\alpha}{2}})$$
+$$= \mathbb{P} (-\zeta_{\frac{\alpha}{2}} \frac{\sigma_0}{\sqrt{n}} \leq \bar{\mathbb{X}} - \mu \leq \zeta_{\frac{\alpha}{2}} \frac{\sigma_0}{\sqrt{n}}
+= \mathbb{P}(\bar{\mathbb{X}} - \zeta_{\frac{\alpha}{2}} \frac{\zeta_0}{\sqrt{n}}
+\leq \mu \leq \bar{\mathbb{X}} + \zeta_{\frac{\alpha}{2}} \frac{\sigma_0}{\sqrt{n}})$$
+
+So C.I for $\mu$ is $(\bar{\mathbb{X}}- \zeta_{\frac{\alpha}{2}} \frac{\sigma_0}{\sqrt{n}},
+\bar{\mathbb{X}} + \zeta_{\frac{\alpha}{2}} \frac{\sigma_0}{\sqrt{n}})$\\
+
+\textbf{ Case 2 }: $\sigma$ is unknown.
+
+We have a random sample $\mathbb{X}_1, ..., \mathbb{X}_n$ from $N(\mu, \sigma^2)$ where $\mu, \sigma^2$ are unknown and we want C.I\ for $\mu$. Recall that sample mean $\bar{\mathbb{X}}$ and sample variance $\mathbb{S}^2$ are independent, We have:
+
+$$\begin{cases}
+\bar{\mathbb{X}} \sim N(\mu, \frac{\sigma^2}{n}) \\
+\frac{(n-1)\mathbb{S}^2}{\sigma^2} \sim \chi^2(n-1)
+\end{cases}
+\text{ independent }
+\Rightarrow
+\begin{cases}
+\frac{\bar{\mathbb{X}}-\mu}{\sigma/\sqrt{n}} \sim N(0, 1) \\
+\frac{(n-1)\mathbb{S}^2}{\sigma^2} \sim \chi^2(n-1)
+\end{cases}
+\text{ independent }
+$$
+The pivotal quantity is $\frac{N(0, 1)}{\chi^2(n-1)} = \frac{\bar{\mathbb{X}}-\mu}{\mathbb{S}/\sqrt{n}} \sim t(n-1)$, and let $t_\frac{\alpha}{2}$ be the number s.t $\mathbb{P}(t(n-1) \geq t_\frac{\alpha}{2}) = \frac{\alpha}{2}$, we have
+$$1-\alpha = \mathbb{P}(-t_\frac{\alpha}{2} \leq \mathbb{T} \leq t_\frac{\alpha}{2}) = \mathbb{P}(-t_\frac{\alpha}{2} \leq \frac{\bar{\mathbb{X}}-\mu}{\mathbb{S}/\sqrt{n}} \leq t_\frac{\alpha}{2}) = \mathbb{P}(-t_\frac{\alpha}{2}\frac{\mathbb{S}}{\sqrt{n}} \leq \bar{\mathbb{X}}-\mu \leq t_\frac{\alpha}{2}\frac{\mathbb{S}}{\sqrt{n}} )$$
+$$= \mathbb{P}(\bar{\mathbb{X}}-t_\frac{\alpha}{2}\frac{\mathbb{S}}{\sqrt{n}} \leq \mu \leq \bar{\mathbb{X}}+t_\frac{\alpha}{2}\frac{\mathbb{S}}{\sqrt{n}})$$
+
+So $(\bar{\mathbb{X}}-t_\frac{\alpha}{2}\frac{\mathbb{S}}{\sqrt{n}}, \bar{\mathbb{X}}+t_\frac{\alpha}{2}\frac{\mathbb{S}}{\sqrt{n}})$ is a $100(1-\alpha)\%$ C.I for $\mu$
+
+\subsubsection{C.I for normal variance}
+We have a random sample $\mathbb{X}_1, ..., \mathbb{X}_n$ from $N(\mu, \sigma^2)$ where $\mu, \sigma^2$ are unknown and we want $100(1-\alpha)\%$ C.I for $\sigma^2$. We know that $\frac{(n-1)\mathbb{S}^2}{\sigma^2} \sim \chi^2(n-1)$, let $\chi^2_\frac{\alpha}{2}$ and $\chi^2_{1-\frac{\alpha}{2}}$ satisfies $\frac{\alpha}{2} = \mathbb{P}(\chi^2(n-1) \leq \chi^2_\frac{\alpha}{2})$ and $\frac{\alpha}{2} = \mathbb{P}(\chi^2(n-1) \geq \chi^2_{1-\frac{\alpha}{2}})$, so
+$$1-\alpha = \mathbb{P}(\chi^2_\frac{\alpha}{2} \leq \chi^2(n-1) \leq \chi^2_{1-\frac{\alpha}{2}}) = \mathbb{P}(\chi^2_\frac{\alpha}{2} \leq \frac{(n-1)\mathbb{S}^2}{\sigma^2} \leq \chi^2_{1-\frac{\alpha}{2}})$$
+$$ = \mathbb{P}(\frac{(n-1)\mathbb{S}^2}{\chi^2_{1-\frac{\alpha}{2}}} \leq \sigma^2 \leq \frac{(n-1)\mathbb{S}^2}{\chi^2_\frac{\alpha}{2}}) $$ 
+So $\frac{(n-1)\mathbb{S}^2}{\chi^2_{1-\frac{\alpha}{2}}}, \frac{(n-1)\mathbb{S}^2}{\chi^2_\frac{\alpha}{2}}$ is the $100(1-\alpha)\%$ C.I for $\sigma^2$.
+
+\subsubsection{C.I for difference of means}
+
+\textbf{Case 1: } Suppose we have
+$\begin{cases}
+\mathbb{X}_1, ..., \mathbb{X}_n \overset{i.i.d}{\sim} N(\mu_x, \sigma_x^2) \\
+\mathbb{Y}_1, ..., \mathbb{Y}_m \overset{i.i.d}{\sim} N(\mu_y, \sigma_y^2) \\
+\end{cases}$
+independent. And $\sigma_x^2, \sigma_y^2$ are known. We want $100(1-\alpha)\%$ C.I for $\mu_x - \mu_y$. For simplicity, we look at the case when $n=m$ (the case where $n\neq m$ is reasoned exactly the same). Notice
+$$\bar{\mathbb{X}} - \bar{\mathbb{Y}} \sim N(\mu_x - \mu_y, \frac{\sigma_x^2+\sigma_y^2}{n})$$
+and $$\mathbb{Z} = \frac{\bar{\mathbb{X}} - \bar{\mathbb{Y}} - (\mu_x - \mu_y)}{\sqrt{\frac{\sigma_x^2+\sigma_y^2}{n}}}$$
+The rest is the same as C.I for normal mean.
+
+\textbf{Case 2: } Suppose we have
+$\begin{cases}
+\mathbb{X}_1, ..., \mathbb{X}_n \overset{i.i.d}{\sim} N(\mu_x, \sigma^2) \\
+\mathbb{Y}_1, ..., \mathbb{Y}_m \overset{i.i.d}{\sim} N(\mu_y, \sigma^2) \\
+\end{cases}$
+independent. And $\sigma^2$ are unknown. We want $100(1-\alpha)\%$ C.I for $\mu_x - \mu_y$. Now we have
+$$\begin{cases}
+\bar{\mathbb{X}} \sim N(\mu_x, \frac{\sigma^2}{n}) \\
+\frac{(n-1)\mathbb{S}^2}{\sigma^2} \sim \chi^2(n-1) \\
+\bar{\mathbb{Y}} \sim N(\mu_y, \frac{\sigma^2}{m}) \\
+\frac{(m-1)\mathbb{S}^2}{\sigma^2} \sim \chi^2(m-1)
+\end{cases}
+\text{ independent } \Rightarrow 
+\begin{cases}
+\bar{\mathbb{X}} - \bar{\mathbb{Y}} \sim N(\mu_x-\mu_y, \frac{\sigma^2}{n} + \frac{\sigma^2}{m}) \\
+\frac{(n-1)\mathbb{S}_x^2 + (m-1)\mathbb{S}_y^2}{\sigma^2} \sim \chi(m+n-2)
+\end{cases}
+\text{ indept. }
+$$
+
+So let
+$$\mathbb{T} = \frac{\frac{\bar{\mathbb{X}} - \bar{\mathbb{Y}} - (\mu_x-\mu_y)}{\sqrt{\frac{\sigma^2}{n} + \frac{\sigma^2}{m}}}}{\sqrt{\frac{(n-1)\mathbb{S}_x^2 + (m-1)\mathbb{S}_y^2}{\sigma^2 (m+n-2)}}} = \frac{\bar{\mathbb{X}} - \bar{\mathbb{Y}} - (\mu_x-\mu_y)}{\sqrt{\frac{(n-1)\mathbb{S}_x^2 + (m-1)\mathbb{S}_y^2}{(m+n-2)}} \sqrt{\frac{1}{n} + \frac{1}{m}}} \sim t(m+n-2)$$
+And we have the pivotal quantity we need.
+
+\subsection{Best Confident Interval?}
+
+In point estimate, we derive UMVUE as the best estimator for $\theta$. Now can we find the best C.I for some parameter $\theta$? Is it possible to find the best $(T_1, T_2) = (t_1(\mathbb{X}_1, ..., \mathbb{X}_n), t_2(\mathbb{X}_1, ..., \mathbb{X}_n))$ in the class of all $100(1-\alpha)\%$ C.I for $\theta$?
+
+Suppose we define "best" C.I as $(T_1, T_2)$ such that 
+$$E_\theta[(T_2-T_1)] \leq \theta[(T_2^*-T_1^*)] \text{ for all } (T_1^*, T_2^*) \in 100(\alpha-1)\% \text{ C.I of } \theta $$
+
+We must call such C.I the uniformly minimum expected length $100(\alpha-1)\%$ C.I for $\theta$ if such C.I exists. However, it has been proven by Wilks that such C.I in general does not exist. So we settle with a less demanding idea of good C.I -- shortest C.I
+
+$$\text{Statistical Inference}
+\begin{cases}
+  \begin{cases}
+    \text{Point Estimate} &
+      \begin{cases}
+        \text{Unbiased} \\
+        \text{Consistent} \\
+        \text{UMVUE}
+      \end{cases} \\
+    \text{Interval Estimate} & -
+      \text{Shortest C.I}
+  \end{cases} \\
+  \text{Hypothesis Testing}
+\end{cases}
+$$
+
+\subsubsection{Shortest C.I}
+
+\subsubsection{Example Shortest C.I}
+
+\textbf{Example}
+
+Let $\mathbb{X}_1, ..., \mathbb{X}_n$ be a random sample from $N(0, 1)$ and , we have seen that $(\bar{\mathbb{X}}-\frac{\zeta_{\frac{\alpha}{2}}}{\sqrt{n}}, \bar{\mathbb{X}}+\frac{\zeta_{\frac{\alpha}{2}}}{\sqrt{n}})$ is a $(1-\alpha)100\%$ C.I for $\mu$, is it the shortest C.I?
+
+Consider the pivotal quantity $Q = \frac{\bar{\mathbb{X}}-\mu}{\frac{1}{\sqrt{n}}} \sim N(0, 1)$, let $q_1, q_2$ satisfy $1-\alpha = P(q_1 \leq Z \leq q_2)$.
+$$1-\alpha = \mathbb{P}(q_1 \leq \mathbb{Z} \leq q_2) = \mathbb{P}(q_1\leq \frac{\bar{\mathbb{X}}-\mu}{\frac{1}{\sqrt{n}}} \leq q_2)$$
+$$= \mathbb{P}(\bar{\mathbb{X}}-q_2\frac{1}{\sqrt{n}} \leq \mu \leq \bar{\mathbb{X}}-q_1\frac{1}{\sqrt{n}} )$$
+So $(\bar{\mathbb{X}}-q_2\frac{1}{\sqrt{n}} , \bar{\mathbb{X}}-q_1\frac{1}{\sqrt{n}})$ s.t $\int_{q_1}^{q_2}f_Z(t)dt = 1-\alpha$ is a $100(1-\alpha)\%$ C.I for $\mu$. The length of this C.I is $$L = \bar{\mathbb{X}}-q_1\frac{1}{\sqrt{n}} - \bar{\mathbb{X}}-q_2\frac{1}{\sqrt{n}} = (q_2 - q_1)\frac{1}{\sqrt{n}}$$
+
+The shortest C.I is to solve min $(q_2 - q_1)\frac{1}{\sqrt{n}}$ s.t $\int_{q_1}^{q_2}f_Z(t)dt = 1-\alpha$.
+
+The derivative w.r.t $q_1$
+
+$$\begin{cases}
+f_Z(q_2)\frac{\partial q_2}{\partial q_1} - f_Z(q_1) = 0 \Rightarrow \frac{\partial q_2}{\partial q_1} = \frac{f_Z(q_1)}{f_Z(q_2)} \\
+0 = \frac{\partial L}{\partial q_1} = (\frac{\partial q_2}{\partial q_1} - 1)\frac{1}{\sqrt{n}} \Rightarrow \frac{\partial q_2}{\partial q_1} = 1
+\end{cases}$$
+
+$$\frac{f_Z(q_1)}{f_Z(q_2)} = 1 \Rightarrow f_Z(q_1) = f_Z(q_2)$$
+
+Since $Z = \frac{\bar{\mathbb{X}}-\mu}{\frac{1}{\sqrt{n}}} \sim N(0, 1)$ has $f_Z(t)$ symmetric at 0, we have $q_1 = -\zeta_\frac{\alpha}{2}, q_2 = \zeta_\frac{\alpha}{2}$.
+
+So $(\bar{\mathbb{X}}-\frac{\zeta_{\frac{\alpha}{2}}}{\sqrt{n}}, \bar{\mathbb{X}}+\frac{\zeta_{\frac{\alpha}{2}}}{\sqrt{n}})$  is a shortest C.I.\\
+
+
+\textbf{Example}
+
+Let $\mathbb{X}_1, ..., \mathbb{X}_n$ be a random sample from $N(\mu, \sigma^2)$, where $\mu, \sigma^2$ are unknown. We have seen that $(\bar{\mathbb{X}}-t_{\frac{\alpha}{2}}\frac{\mathbb{S}}{\sqrt{n}}, \bar{\mathbb{X}}+t_{\frac{\alpha}{2}}\frac{\mathbb{S}}{\sqrt{n}})$ is a $100(1-\alpha)\%$ C.I for $\mu$, is it shortest C.I?
+
+We consider pivotal quantity $T = \frac{\bar{\mathbb{X}}-\mu}{\frac{\mathbb{S}}{\sqrt{n}}} \sim t(n-1)$
+Let $q_1, q_2$ satisfy
+$$1-\alpha = P(q_1 \leq T \leq q_2) = P(\bar{\mathbb{X}}-q_2\frac{\mathbb{S}}{\sqrt{N}} \leq \mu \leq \bar{\mathbb{X}}-q_1\frac{\mathbb{S}}{\sqrt{N}})$$
+So $(\bar{\mathbb{X}}-q_2\frac{\mathbb{S}}{\sqrt{N}}, \bar{\mathbb{X}}-q_1\frac{\mathbb{S}}{\sqrt{N}})$ s.t $\int_{q_1}^{q_2}f_Z(t)dt = 1-\alpha$ is a $100(1-\alpha)\%$ C.I for $\mu$. The length of this C.I is 
+$$L = (q_2 - q_1)\frac{\mathbb{S}}{\sqrt{n}}$$
+
+Taking derivative w.r.t $q_1$, we have
+
+$$\begin{cases}
+f_T(q_2)\frac{\partial q_2}{\partial q_1} - f_T(q_1) = 0 \Rightarrow \frac{\partial q_2}{\partial q_1} = \frac{f_T(q_1)}{f_T(q_2)} \\
+0 = \frac{\partial L}{\partial q_1} = (\frac{\partial q_2}{\partial q_1} - 1)\frac{S}{\sqrt{n}} \Rightarrow \frac{\partial q_2}{\partial q_1} = 1
+\end{cases}$$
+
+$$\Rightarrow \Rightarrow f_T(q_1) = f_T(q_2), T=\frac{\bar{\mathbb{X}}-\mu}{\frac{S}{\sqrt{n}}} \sim t(n-1)$$, a symmetric distribution
+$$\Rightarrow q_1 = -t_{\frac{\alpha}{2}}, q_2 = t_{\frac{\alpha}{2}}$$
+and $(\bar{\mathbb{X}}-t_{\frac{\alpha}{2}}\frac{s}{\sqrt{n}}, \bar{\mathbb{X}}+t_{\frac{\alpha}{2}}\frac{s}{\sqrt{n}})$ is shortest C.I for $\mu$
+
+\subsection{Approximate C.I}
+So far we have been looking for C.I of continuous random variable. But what about discrete random variable? Finding $(t_1, t_2)$ such that $\mathbb{P}(t_1 \leq \theta \leq t_2)$ isn't always possible, because discrete random variable takes on discontinuous c.d.f. To try to \textbf{approximate} C.I for discrete random variable, let's review some probability theorems.
+
+(a) Convergence in distribution ($\overset{d}{\to}$), we say
+$$Y_n \overset{d}{\to} Y$$
+if $F_{Y_n}(y) \to F_Y(y)$ point wise on those $y$ such that $F_Y$ is continuous on $y$. Why $\overset{d}{\to}$? If $Y_n \overset{d}{\to} Y$, then
+$$P(a\leq Y_n \leq b) = F_{Y_n}(b) - F_{T_n}(a) \to F_Y(b)-F_Y(a) = P(a\leq Y \leq b)$$ 
+$$\Rightarrow (a\leq Y_n \leq b)  \cong P(a\leq Y \leq b) \text{ when n is large }$$
+
+(b) Central Limit Theorem (CLT). Let $\mathbb{X}_1, ..., \mathbb{X}_n$ be random sample from a distribution with mean $\mu$ and variance $\sigma^2>0$, then
+$$\frac{\bar{\mathbb{X}}-\mu}{\frac{\sigma}{\sqrt{n}}} \overset{d}{\to} N(0, 1)$$
+Why CLT? For constructing  a pivotal quantity $P(-\zeta_{\frac{\alpha}{2}} \leq \frac{\bar{\mathbb{X}}-\mu}{\frac{\sigma}{\sqrt{n}}} \leq \zeta_{\frac{\alpha}{2}}) \cong P(-\zeta_{\frac{\alpha}{2}} \leq Z \leq \zeta_{\frac{\alpha}{2}}) = 1-\alpha$
+
+(c) Converge in probability. We say that $\mathbb{X}_n$ converges to $\mathbb{X}$ \textbf{in probability}, if for every $\epsilon > 0$, $\mathbb{P}(|\mathbb{X}_n-\mathbb{X}|>\epsilon) \to 0$ as $n \to \infty$. Denoted $\mathbb{X}_n \overset{P}{\to} \mathbb{X}$
+
+(d) Weak Law of Large Number( WLLN ).
+
+If $\mathbb{X}_1, ..., \mathbb{X}_n$ is a random sample with finite mean $\mu$ and variance $\sigma^2$ exists, then $\bar{\mathbb{X}} \overset{P}{\to} \mu$.
+
+(e) \textbf{Theorem} if $\mathbb{Y}_n \overset{P}{\to} a$, then $g(\mathbb{Y}_n) \overset{P}{\to} a$ for any continuous function $g$.
+
+(f) \textbf{(Slutsky's Theorem)} if $\mathbb{X}_n \overset{d}{\to} a \mathbb{X}$ and $\mathbb{Y}_n \overset{P}{\to} a$, then
+$$\begin{cases}
+\mathbb{X}_n \pm \mathbb{Y}_n & \overset{d}{\to} \mathbb{X} \pm a \\
+\mathbb{X}_n \mathbb{Y}_n & \overset{d}{\to} a\mathbb{X} \\
+\frac{\mathbb{X}_n}{\mathbb{Y}_n} & \overset{d}{\to} \frac{\mathbb{X}}{a}
+\end{cases}$$
+Note if $\mathbb{Y}_n \overset{P}{\to} a$ then $\mathbb{Y}_n \cong a$ when $n$ is large. If $\mathbb{X}_n \overset{d}{\to} \mathbb{X}$, then $\mathbb{P}(a \leq \mathbb{X}_n \leq b) \cong \mathbb{P}(a \leq \mathbb{X} \leq b)$ when $n$ is large. And convergence in probability is stronger. I.e.
+$$\mathbb{X}_n \overset{P}{\to} \mathbb{X} \Rightarrow \mathbb{X}_n \overset{d}{\to} \mathbb{X}$$
+
+Now we are in position to introduce approximate C.I
+
+(1) C.I for $\mu$ when distribution is unknown (unknown means $\mu$ and $\sigma^2$ are unknown). Let $$\mathbb{X}_1, ..., \mathbb{X}_n$$ be a random sample from a distribution with mean $\mu$ and variance $\sigma^2$, want C.I for $\mu$. First
+$$\frac{\bar{\mathbb{X}}-\mu}{\frac{\sigma}{\sqrt{n}}} \overset{d}{\to} N(0, 1)$$
+by C.L.T. Since the convergence is in distribution, we know we could approximate the distribution by $N(0, 1)$, but $\sigma^2$ is unknown, so we need further information about $\sigma^2$. Recall
+$$\mathbb{S}^2 = \frac{1}{n-1}\sum \mathbb{X}_i^2 - \frac{n}{n-1}\bar{\mathbb{X}}^2 = \frac{n}{n-1}\frac{1}{n}\sum \mathbb{X}_i^2 - \frac{n}{n-1}\bar{\mathbb{X}}^2$$
+$$\overset{P}{\to} \frac{n}{n-1} (\mu^2+\sigma^2) - \frac{n}{n-1} \mu^2 \text{ (by W.L.L.N. and (e))}$$
+$$\overset{P}{\to} \sigma^2 \Rightarrow \mathbb{S} \overset{P}{\to} \sigma --------------- (4.4.1)$$
+So we combine $Z$ and $S$
+$$\Rightarrow \frac{\bar{\mathbb{X}}-\mu}{\frac{S}{\sqrt{n}}}  = \frac{\bar{\mathbb{X}}-\mu}{\frac{\sigma}{\sqrt{n}}} \frac{\sigma}{S}\overset{d}{\to} N(0, 1) -------- (4.4.2)$$
+
+Where $$\frac{\bar{\mathbb{X}}-\mu}{\frac{\sigma}{\sqrt{n}}} \overset{d}{\to} N(0, 1) \text{ by C.L.T} \text{ and } \frac{\sigma}{S} \overset{P}{\to} 1 \text{ by 4.4.1 }$$
+And by \textbf{Slutsky's theorem}, we have 4.4.2. So the analysis now follows similarly as in continuous case:
+$$1-\alpha = \mathbb{P}(-\zeta_{\frac{\alpha}{2}} \leq \mathbb{Z} \leq \zeta_{\frac{\alpha}{2}}) \cong 
+\mathbb{P}(-\zeta_{\frac{\alpha}{2}} \leq \frac{\bar{\mathbb{X}}-\mu}{\frac{S}{\sqrt{n}}} \leq \zeta_{\frac{\alpha}{2}}) $$
+$$= \mathbb{P}(\bar{\mathbb{X}}-\zeta_\frac{\alpha}{2}\frac{\mathbb{S}}{\sqrt{n}} \leq \mu \leq \bar{\mathbb{X}}+\zeta_\frac{\alpha}{2}\frac{\mathbb{S}}{\sqrt{n}})$$
+
+So $(\bar{\mathbb{X}}-\zeta_\frac{\alpha}{2}\frac{\mathbb{S}}{\sqrt{n}}, \bar{\mathbb{X}}+\zeta_\frac{\alpha}{2}\frac{\mathbb{S}}{\sqrt{n}})$ is a $100(1-\alpha)\%$ C.I for $\mu$
+
+(2) Let $\mathbb{Y} \sim binomial(n, p)$, want C.I $p$.
+
+Let $\mathbb{X}_1, ..., \mathbb{X}_n \overset{\text{i.i.d}}{\to} Bernoulli(p)$, and let $\hat{P} = \frac{Y}{n}$. 
+$$\because \mathbb{Y} \overset{d}{\to} \sum_{i=1}^n \mathbb{X}_i \Rightarrow
+\begin{cases}
+\hat{P} = \bar{\mathbb{X}} \overset{P}{\to} p \text{ by W.L.L.N} \\
+\frac{\hat{P} - p}{\sqrt{\frac{p(1-p)}{n}}} \overset{d}{\to} \frac{\bar{\mathbb{X}} - p}{\sqrt{\frac{p(1-p)}{n}}} \overset{d}{\to} N(0, 1) \text{ by C.L.T}
+\end{cases}$$ 
+$$\text{Then } \frac{\hat{P} - p}{\sqrt{\frac{\hat{P}(1-\hat{P})}{n}}} = \frac{\hat{P} - p}{\sqrt{\frac{p(1-p)}{n}}}\sqrt{\frac{p(1-p)}{\hat{P}(1-\hat{P})}} \overset{d}{\to} N(0, 1)\text{ by Slutsky's theorem}$$
+
+So $$1-\alpha = \mathbb{P}(-\zeta_{\frac{\alpha}{2}} \leq \mathbb{Z} \leq \zeta_{\frac{\alpha}{2}}) \cong 
+\mathbb{P}(-\zeta_{\frac{\alpha}{2}} \leq \frac{\hat{P} - p}{\sqrt{\frac{\hat{P}(1-\hat{P})}{n}}} \leq \zeta_{\frac{\alpha}{2}})$$
+$$= \mathbb{P}(\hat{P}-\sqrt{\frac{\hat{P}(1-\hat{P})}{n}}\zeta_{\frac{\alpha}{2}} \leq p \leq \hat{P}+\sqrt{\frac{\hat{P}(1-\hat{P})}{n}}\zeta_{\frac{\alpha}{2}})$$
+
+(3) C.I for difference of $p's$
+$\begin{cases}
+\mathbb{Y}_1 \sim b(n, p_1) \\
+\mathbb{Y}_2 \sim b(n, p_2)
+\end{cases}$
+are independent. Want C.I of $p_1 - p_2$.
+
+Let $\hat{P}_i = \frac{Y_i}{n}$, then $\hat{P}_i \overset{p}{\to} p_i$ and $\frac{\hat{P}_i - p_i}{\sqrt{\frac{p_i(1-p_i)}{n}}} \overset{d}{\to} N(0, 1)$
+$$\Rightarrow \hat{P}_i \cong N(p_i, \frac{p_i(1-p_i)}{n}) \Rightarrow \frac{\hat{P}_1 - \hat{P}_2 - (p_1 - p_2)}{\sqrt{\frac{p_1(1-p_1) + p_2(1-p_2)}{n}}} \cong N(0, 1)$$
+$$\Rightarrow \frac{\hat{P}_1 - \hat{P}_2 - (p_1 - p_2)}{\sqrt{\frac{\hat{P}_1(1-\hat{P}_1) + \hat{P}_2(1-\hat{P}_2)}{n}}} \cong N(0, 1)$$
+So $100(1-\alpha)\%$ C.I is $(\hat{P}_1 - \hat{P}_2 - \zeta_\frac{\alpha}{2}\sqrt{\frac{\hat{P}_1(1-\hat{P}_1) + \hat{P}_2(1-\hat{P}_2)}{n}}, \hat{P}_1 - \hat{P}_2 + \zeta_\frac{\alpha}{2}\sqrt{\frac{\hat{P}_1(1-\hat{P}_1) + \hat{P}_2(1-\hat{P}_2)}{n}})$
+
+\textbf{Example} Suppose that the exact values of the data $x_1, ..., x_n$, are not known, but it is known that 40 of the 50 measurements are larger than t. Find an approximate one-sided lower 95\% confidence limit for $\mathbb{P}(x>t)$ based on this information.
+
+\textbf{Solution} Let $\mathbb{X}_1, ..., \mathbb{X}_{50}$ be 50 i.i.d observations, and let $p = \mathbb{P}(\mathbb{X}>t)$, then $\mathbb{X}_i \overset{i.i.d}{\sim} Bernoulli(p)$. So $\hat{\mathbb{P}} = \frac{4}{5} = 0.8$, and C.I for $p$ is 
+$$(0.8 - \sqrt{\frac{0.8 * 0.2}{50}}, 0.8 + \sqrt{\frac{0.8 * 0.2}{50}})$$\\
+
+\subsection{Testing Hypothesis}
+We have a random sample from $\mathbb{X}_1, ..., \mathbb{X}_n$. Want hypothesis about $\theta$ and conduct hypothesis testing with random sample.
+
+\textbf{Definition} A \textbf{statistical hypothesis} is a conjugate about $\theta$. If it is specified with a single value it is called a simple hypothesis. Otherwise it is a composite hypothesis.
+
+Ex: $H: \theta = \theta_0$ is a simple hypothesis. $H: \theta \leq \theta_0, H:\theta = \{\theta_1, \theta_2 \}$ are composite hypothesis.
+
+It requires 2 types of hypothesis.
+
+\textbf{Definition} The \textbf{null hypothesis} $H_0$ is a hypothesis that we reject it only if data reveals strongly that it is not true. The \textbf{Alternative hypothesis} $H_1$, is the hypothesis alternative to the null hypothesis.
+
+To see if some one is guilty, or a new drug is effective, the hypothesis is\\
+(a) $H_0: $ Suspect is not guilty, $H_1: $ Suspect is guilty, \\
+(b) $H_0: $ The new drug is not effective, $H_1: $ The new drug is effective.\\
+
+We take rejection of $H_0$ only if there is strong evidence suggesting $H_1$ is true. So $H_0$ is a hypothesis we do not reject easily. Or on the other hand, and want to accept $H_0$ unless evidence suggest strongly otherwise.
+
+Once the hypothesis is determined, we generate a random sample of the new product and define a test for testing hypothesis.
+
+\textbf{Definition} A test is a rule to decide to reject or not to reject a null hypothesis. Usually a test specifies a subset $C$ of the space (range) of random variables $\mathbb{X}_1, ..., \mathbb{X}_n$, that we reject $H_0$ if the observations $\mathbb{X}_1, ..., \mathbb{X}_n \in C$. And not reject $H_0$ when $\mathbb{X}_1, ..., \mathbb{X}_n \notin C$. This $C$ is called the critical region.\\
+
+Two types of error may happen
+\begin{enumerate}
+\item \textbf{Type I error:} $H_0$ is true, but we reject $H_0$.
+\item \textbf{Type II error:} $H_1$ is true, but we do not reject $H_0$.
+\end{enumerate}
+
+\textbf{Definition} The \textbf{power function} $\pi_C(\theta)$ of a critical region $C$ represents the probability of rejecting $H_0$ when $\theta$ is true.
+
+So let $\mathbb{X}_1, ..., \mathbb{X}_n$ be a random sample, the power function of critical region $C$ is
+$$\pi_C(\theta) = \mathbb{P}(\text{rejecting } H_0 | \theta \text{ is true }) = \mathbb{P}((\mathbb{X}_1, ..., \mathbb{X}_n)\in C | \theta \text{ is true })$$
+
+Notice is $\theta = H_0$ we wish $\pi_C(\theta)$ is small. And if $\theta = H_1$ we wish $\pi_C(\theta)$ is large.
+
+\textbf{Definition} The size of a critical region $C$ is $\underset{\theta \in H_0}{\sup}\pi_C(\theta)$. That is, the maximum probability of type I error.
+
+\textbf{Example} If  $\mathbb{X}_1, ..., \mathbb{X}_n$ is a random sample from a distribution with mean and variance are $\theta$ and 100, respectively. If the best critical region for testing $H_0:\theta = 75$ vs.$ H_1 :\theta = 78$ is $R=\{x_1, ..., x_n | c < \bar{x}\}$. Find $n$ and $c$ so that the probability of type I error is 0.05 and probability of type II error is 0.1, approximately.
+
+\textbf{Solution} solve for
+$$0.05 = \mathbb{P}((\mathbb{X}_1, ..., \mathbb{X}_n)\in R | H_0) = \mathbb{P}(\frac{\bar{X} - 75}{100} > \frac{c-75}{10/\sqrt{n}}) $$
+$$\cong \mathbb{P}(\mathbb{Z} > \frac{c-75}{10/\sqrt{n}}) = \mathbb{P}(\mathbb{Z} > \zeta_{0.05}) $$
+So $c = \frac{10}{\sqrt{n}}\zeta_{0.05} + 75$ gives approximately 0.01 probability of type I error. Type II error are found similarly, but instead, we solve for $$0.1 = \mathbb{P}((\mathbb{X}_1, ..., \mathbb{X}_n)\notin R | H_0)$$

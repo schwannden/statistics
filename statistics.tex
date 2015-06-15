@@ -1,0 +1,128 @@
+\documentclass[a4paper,12pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\title{\textbf{Introduction to Statistics}}
+\author{\textbf{Anche Kuo}}
+\date{NCTU Computer Science}
+
+\begin{document}
+\maketitle
+
+\begin{figure}[ht!]
+\centering
+\includegraphics[width=90mm]{charlotteDubourg.jpg}
+\\
+$$To\ my\ parent,\ Tiger\ and\ Sophie$$
+$$Who\ gave\ me\ a\ world\ to\ dream\ and\ always\ encourage\ me\ to\ keep\ dreaming$$
+\label{overflow}
+\end{figure}
+
+\newpage
+\tableofcontents
+\newpage
+\input{1_StatisticalInferences.tex}
+\newpage
+\input{2_PointEstimate.tex}
+\newpage
+\input{3_UMVUE.tex}
+\newpage
+\input{4_HyothesisTesting.tex}
+\newpage
+\input{5_MPTest.tex}
+\newpage
+\input{6_UMPtest.tex}
+\newpage
+\input{7_LRT.tex}
+\newpage
+
+\section{Goodness of Fit Test -- chi-square Test}
+In statistical inference of C.I and hypothesis testing, we need to assume that the random sample is draw from a fixed distribution (normal or Poisson, etc). How do we know that the assumed distribution is true?
+
+Hypothesis may be:
+\begin{enumerate}
+\item $H_0: \mathbb{X} \sim N(\mu, \sigma^2)$
+\item $H_0: \mathbb{X} \sim N(5, 100)$
+\item $H_0: \mathbb{X} \sim Poisson(\lambda))$
+\item $H_0: \mathbb{X} \sim Poisson(5)$
+\end{enumerate}
+
+Suppose that now we have a random sample $\mathbb{X}_1, ..., \mathbb{X}_n$ from an unknown distribution $f(x)$, we consider the hypothesis 
+$$H_0: \mathbb{X} \sim f_0(x)$$
+where $f_0$ is known without unknown parameters.
+
+Let $A_1, ..., A_k$ be a partition for space of $\mathbb{X}$ , we define
+$$P_j = \mathbb{P}(\mathbb{X}\in A_j | H_0) = \int_{A_j} f_0(x) dx, j = 1, 2, ..., n$$
+$$\Rightarrow \sum_{j=1}^k P_j = 1$$
+
+Let $N_j$ denote the number of $x_1, ..., x_n$ falling into $A_j$, then $\sum_{j=1}^k N_j = n$. Note $N_j$ is a statistics of $\mathbb{X}_1, ..., \mathbb{X}_n$. We have the following theorem
+
+\textbf{Theorem} Let $Q_k = \sum_{j=1}^k \frac{(N_j - nP_j)^2}{nP_j} = \sum_{j=1}^k \frac{(\text{actual \#} - \text{theoratical \#})^2}{\text{theoratical \# in }A_j}$
+, we have $Q_k \overset{d}{\to} \chi^2(k-1)$ when $H_0$ is true.
+
+\textbf{Proof} We consider $k = 2$ only ($N_2 = n - N_1, P_2 = 1- P_1$)
+$$Q_2 = \frac{(N_1 - nP_1)^2}{nP_1} + \frac{(N_2 - nP_2)^2}{nP_2} = \frac{(N_1 - nP_1)^2}{nP_1} + \frac{((n-N_1) - n(1-P_1))^2}{n(1-P_1)}$$
+$$= (N_1 - nP_1)^2 (\frac{1}{nP_1} + \frac{1}{n(1-nP_1)})$$
+$$= \frac{(N_1 - nP_1)^2}{nP_1(1-P_1)} \overset{d}{\to} \chi^2(1) $$
+because $$N_1 \sim b(n, P_1) \Rightarrow \frac{N_1 - nP_1}{\sqrt{nP_1(1-P_1))}} \overset{d}{\sim} N(0, 1)$$
+
+\textbf{Definition} The Pearson's Chi-square test for hypothesis
+$$H_0: \mathbb{X} \sim f_0(x)$$
+is: reject $H_0$ is $Q_k \geq \chi^2_{1-\alpha}$ 
+Because $$\mathbb{P}(\text{type I error}) = \mathbb{P}(\text{reject }H_0 | H_0) \cong \mathbb{P}(Q_k \geq \chi^2_{1-\alpha} | H_0)$$
+$$= \mathbb{P} (\chi^2(k-1) \geq \chi^2_{1-\alpha}) = 1-\alpha$$
+
+\textbf{Example (verification of Mendelian Theory)} Shape and color of a pea may be classified into four groups. Their theoretical probabilities and actual observations are listed in table 1:
+
+\begin{table}
+\caption{}
+\begin{center}
+    \begin{tabular}{ | l | c | c | c | c |}
+    \hline
+    Genotype & Group & Probability. & observations  \\ \hline
+    $A_1$   & \begin{tabular}{c}Round and Yellow\end{tabular}    
+                 & \begin{tabular}{c}$P_1 = \mathbb{P}(A_1) = \frac{9}{19}$\end{tabular}     
+                 & \begin{tabular}{c}$N_1 = $ 315\end{tabular} \\ \hline
+    $A_2$  & \begin{tabular}{c}Round and Green\end{tabular}    
+                 & \begin{tabular}{c}$P_2 = \mathbb{P}(A_2) = \frac{3}{16}$\end{tabular}    
+                 & \begin{tabular}{c}$N_2 = $ 128\end{tabular} \\ \hline
+    $A_3$  & \begin{tabular}{c}Angular and Yellow\end{tabular}    
+                 & \begin{tabular}{c}$P_3 = \mathbb{P}(A_3) = \frac{3}{16}$\end{tabular}   
+                 & \begin{tabular}{c}$N_3 = $ 101\end{tabular} \\ \hline
+    $A_4$   & \begin{tabular}{c}Angular and Green\end{tabular}    
+                 & \begin{tabular}{c}$P_4 = \mathbb{P}(A_4) = \frac{3}{16}$\end{tabular}       
+                 & \begin{tabular}{c}$N_4 = $ 32\end{tabular} \\ \hline
+    \end{tabular}
+\end{center}
+\end{table}
+
+Is Mendelian theory correct? 
+
+\textbf{Solution} We consider hypothesis $H_0: P_1 = \frac{9}{16}, P_2 = \frac{3}{16}, P_3 = \frac{3}{16}, P_4 = \frac{1}{16}$
+
+Notice we have $k = 4$ and $n = N_1 + N_2 + N_3 + N_4 = 556$, so
+$$Q_4 = \sum_{j=1}^4 \frac{(N_j - nP_j)^2}{nP_j} = 0.47 \leq \chi^2_0.95(3) = 7.81$$
+
+So we do not reject $H_0$ and consider Mendelian theory to be correct!\\
+
+We now consider hypothesis
+$$H_0: \mathbb{X} \sim f(x, \theta_1, ..., \theta_p)$$
+where $\theta_1, ..., \theta_p$ are unknown parameters. Again, let $A_1, ..., A_k$ be a partition of space of $\mathbb{X}$.
+
+Let $\hat{\theta}_1, ..., \hat{\theta}_k$ be m.l.e's of $\theta_1, ..., \theta_p$, we define
+$$\hat{P}_j = \int_{A_j} f(x, \hat{\theta}_1, ..., \hat{\theta}_p)dx$$
+$N_j = $ \# of $x_1, ..., x_n$ falling into $A_j$.
+
+\textbf{Theorem} Let
+$$Q_k = \sum_{j=1}^k \frac{(N_j - n\hat{P}_j)^2}{n\hat{P}_j}$$
+Then $Q_k \overset{d}{\to} \chi^2(k-p-1)$ if $H_0$ is true.
+
+
+
+\newpage
+\input{appendix.tex}
+
+\end{document}

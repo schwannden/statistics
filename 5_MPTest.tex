@@ -1,0 +1,141 @@
+\section{Most Powerful Test}
+The rule for choosing a significance level is to fit a significance level $\alpha$ and a test in the class of all tests with size $\leq \alpha$ that minimizes type II error. Usually $\alpha = 0.05, 0.01$ is very small.
+
+\textbf{Definition} Consider a simple hypothesis $H_0: \theta = \theta_0, H_1: \theta = \theta_1$. We say that a test with critical region C is the momst powerful (MP) test of significance level $\alpha$ if the following holds:
+\begin{enumerate}
+\item $\mathbb{P}(\ (\mathbb{X}_1, ..., \mathbb{X}_n) \in C\ | H_0 ) = \pi_C(\theta_0) = \alpha$ (size of the rejection region is $\alpha$)
+\item $\mathbb{P}(\ (\mathbb{X}_1, ..., \mathbb{X}_n) \in C\ | H_1 ) \geq \mathbb{P}(\ (\mathbb{X}_1, ..., \mathbb{X}_n) \in A\ | H_1 ) $ for every $A$ such that $\mathbb{P}(\ (\mathbb{X}_1, ..., \mathbb{X}_n) \in A\ | H_0 ) = \pi_A(\theta_0) \leq \alpha$ (for every other rejection region of size $\leq \alpha$, type II error is higher)
+\end{enumerate}
+
+Recall that if $\mathbb{X}_1, ..., \mathbb{X}_n$ are random variables, and $x_1, ..., x_n$ is observed from the random variables. The likelihood function if defined as $L(\theta, x_1, ..., x_n) = f(x_1, ..., x_n | \theta)$. The likelihood ratio is defined as $\frac{L(\theta_0, x_1, ..., x_n)}{L(\theta_1, x_1, ..., x_n)}$. An intuition for choosing critical region $C$ is if the likelihood ratio is high, then $\theta_0$ is more likely to be true, and if the likelihood ratio is low, then then $\theta_1$ is more likely to be true.
+ 
+\textbf{Theorem (Neymann-Pearson Theorem)}   Consider a simple hypothesis $H_0: \theta = \theta_0, H_1: \theta = \theta_1$. And let $C$ be the critical region of significance level $\alpha$. If there exists $k > 0$ such that
+\begin{enumerate}
+\item $\frac{L(\theta_0, x_1, ..., x_n)}{L(\theta_1, x_1, ..., x_n)} \leq k$ for all $(x_1, ..., x_n) \in  C$
+\item $\frac{L(\theta_0, x_1, ..., x_n)}{L(\theta_1, x_1, ..., x_n)} \geq k$ for all $(x_1, ..., x_n) \notin  C$
+\end{enumerate}
+Then the test with critical region $C$ is the most powerful (MP) test of significance level $\alpha$.
+
+\textbf{Proof} Let's denote the likelihood function $L(\theta, x_1, ..., x_n) $ as $L(\theta)$. If we have $\int_{C} L(\theta_0) d\underline{x} = \alpha$ (critical region $C$ has significance level $\alpha$, and let $A$ be any critical region such that $\int_{A} L(\theta_0) d\underline{x} \leq \alpha$, we want to show that $\int_C L(\theta_1) d\underline{x} \geq \int_A L(\theta_1) d\underline{x}$.
+
+$$\int_C L(\theta_1) d\underline{x} - \int_A L(\theta_1) d\underline{x}
+= \int_{C\cap A^c} L(\theta_1) d\underline{x} - \int_{A \cap C^c} L(\theta_1) d\underline{x}$$
+$$\geq \int_{C\cap A^c} \frac{L(\theta_0)}{k} d\underline{x} - \int_{A\cap C^c} \frac{L(\theta_0)}{k} d\underline{x}
+= \frac{1}{k} ( \int_C L(\theta_0) d\underline{x} - \int_{A} L(\theta_0) d\underline{x} ) \geq 0 $$
+$\blacksquare$
+
+Following from Neyman-Pearson theorem, the MP critical region is $C = \{ \underline{x}: \frac{L(\theta_0, \underline{x})}{L(\theta_1, \underline{x})} \leq k\}$ where k satisfies 
+$$\alpha = \mathbb{P}((\mathbb{X}_1, ..., \mathbb{X}_n)\in C | \theta = \theta_0)$$
+$$= \mathbb{P}( \frac{L(\theta_0, \mathbb{X}_1, ..., \mathbb{X}_n)}{L(\theta_1, \mathbb{X}_1, ..., \mathbb{X}_n)} \leq k | \theta = \theta_0 )$$
+We can also say the test is:
+$$\text{Rejecting } H_0: \theta = \theta_0 \text{ if } \frac{L(\theta_0, x_1, ..., x_n)}{L(\theta_1, x_1, ..., x_n)} \leq k $$
+
+However this is not a practical expression as we usually do not know the distribution of $\frac{L(\theta_0, x_1, ..., x_n)}{L(\theta_1, x_1, ..., x_n)}$. So given $\alpha$, how do we solve for $k$? We want exact expression for rejection region $C$ so that we can conduct test. Suppose that, for given $k > 0$, there exists constant $c$ such that
+$$\frac{L(\theta_0, \underline{x})}{L(\theta_1, \underline{x})} \leq k \ \ \ \leftrightarrow \ \ \ u(\underline{x}) \leq c $$
+and the distribution $u$ is available. The the MP critical region is 
+$$C = \{u(\underline{\mathbb{X}}) \leq c \} \text{ such that } \alpha = \mathbb{P}(u(\mathbb{X}_1, ..., \mathbb{X}_n)\leq c | \theta = \theta_0)$$
+to simplify notation, we will use:
+$$\{u(\underline{\mathbb{X}}) \leq c \} \text{ as the short hand for } \{\underline{x} | u(\underline{x}) \leq c \} $$
+
+\textbf{Example} Let $\mathbb{X}_1, ..., \mathbb{X}_n$ be a random sample from $N(\mu, 1)$, want MP critical region of significance level $\alpha$ for $H_0: \mu = 0$ vs $H_1: \mu=1$.
+
+\textbf{Solution} Likelihood function is
+$$L(\mu, x_1, ..., x_n) = \prod_{i=1}^n \frac{1}{\sqrt{2\pi}}  e^{-\frac{(x_i-\mu)^2}{2}} = (2\pi)^{\frac{n}{2}} e^{-\frac{1}{2} [\sum x_i^2 - 2\mu\sum x_i + n\mu^2]}$$
+So the likelihood ratio is
+$$\frac{L(\mu = 0, \underline{x})}{L(\mu = 1, \underline{x})} = e^{-\sum x_i + \frac{n}{2}} \leq k \iff -\sum x_i \leq \ln k - \frac{n}{2} \iff \bar{x} \geq -\frac{\ln k}{n} + \frac{1}{2} = c$$
+Therefore the MP critical region is $C = \{ \bar{\mathbb{X}} \geq c\}$. Now we just need to find $c$. Using the fact that $\frac{\bar{\mathbb{X}} - \mu}{\sigma/\sqrt{n}} \sim \mathbb{Z}$, $c$ is the number such that
+$$\alpha = \mathbb{P}(\text{type I error}) = \mathbb{P}(\bar{X}\geq c | \mu = 0) = \mathbb{P}(\sqrt{n}\bar{X}\geq \sqrt{n}c | \mu = 0)$$
+$$= \mathbb{P}(\mathbb{Z} \geq \sqrt{n}c ) \Rightarrow c = \frac{\zeta_\alpha}{\sqrt{n}}$$
+So the let the critical region of for $H_0: \mu = 0$ vs $H_1: \mu=1$ be $C = \{ \bar{\mathbb{X}} \geq \frac{\zeta_\alpha}{\sqrt{n}} \}$, by Neyman-Pearson theorem, $C$ is the most powerful critical region of significance level $\alpha$. $\blacksquare$\\
+
+\textbf{Example} Let $\mathbb{X}_1, ..., \mathbb{X}_n$ be a random sample from $Poisson(\lambda)$. We consider MP test for $H_0: \lambda = 10$ vs $H_1: \lambda=1$
+
+\textbf{Solution} The likelihood function is
+$$L(\lambda, x_1, ..., x_n) = \prod_{i=1}^n \frac{\lambda^{x_i}}{x_i!}e^{-\lambda}$$
+So the likelihood ratio is
+$$\frac{10^{\sum x_i} e^{-10n}}{e^{-n}} = 10^{\sum x_i} e^{-9n} \leq k$$
+$$ \iff \sum x_i \ln(10) \leq \ln(k) + 9n \Rightarrow  \sum x_i  \leq \frac{\ln(k) + 9n}{\ln(10)} = c$$
+Solving for c, we want
+$$\alpha = \mathbb{P}(\text{type I error}) = \mathbb{P}(\sum x_i \leq c | \lambda = 10)$$
+$$\text{(Let} \mathbb{Y} \sim Poisson(10n) \text{) } = \mathbb{P}(Y \leq c) = \sum_{i=0}^{\lfloor c \rfloor} \frac{(10n)^i e^{-10n}}{i!}$$
+Now $c$ can be solved easily. And $C = \{\sum \mathbb{X}_i \leq c\}$ is the MP rejection region of size $\alpha$.
+$\blacksquare$\\
+
+\textbf{Examples} Let $\mathbb{X}_1, ..., \mathbb{X}_n$ be random sample from the following p.d.f
+$$f(x|\mu, \tau) = \sqrt{\frac{\tau}{2\pi x^2}}e^{-\frac{\tau}{2x\mu^2}(x-\mu)^2}$$
+where $x, \mu, \tau > 0$, show that there exists the most power test for hypothesis:
+\begin{enumerate}
+\item $H_0: \mu = \mu_0, H_1: \mu = \mu_1$, where $\tau$ is known and $\mu_1 > \mu_0$ is known.
+\item $H_0: \tau = \tau_0, H_1: \tau = \tau_1$, where $\mu$ is known and $\tau_1 > \tau_0$ is known.
+\end{enumerate}
+
+\textbf{Solution} Firstly the joint distribution
+$$f(\underline{x}, \mu, \tau) = (\frac{\tau}{2\pi x_i^2})^\frac{n}{2} e^{-\sum_{i=1}^n\frac{\tau}{2x_i\mu^2}(x_i-\mu)^2}$$
+
+(1) We want to find $k$ such that the likelihood ratio is smaller than $k$:
+$$\frac{f(\underline{x}, \mu_0, \tau)}{f(\underline{x}, \mu_1, \tau)} 
+= e^{-\sum_{i=1}^n\frac{\tau}{2x_i\mu_0^2}(x_i-\mu_0)^2 + \sum_{i=1}^n\frac{\tau}{2x_i\mu_1^2}(x_i-\mu_1)^2}
+= e^{-\frac{\tau}{2}[\sum_{i=1}^n x_i (\frac{1}{\mu_0^2} - \frac{1}{\mu_1^2}) - (\frac{n}{\mu_0} - \frac{n}{\mu_1})]} \leq k$$
+$$\Rightarrow \sum_{i=1}^n x_i (\frac{1}{\mu_1^2} - \frac{1}{\mu_0^2}) \leq \ln(k) + (\frac{n}{\mu_1} - \frac{n}{\mu_0}) = k'$$
+And since  $\mu_1 > \mu_0$
+$$\Rightarrow \sum_{i=1}^n x_i \geq \frac{k'}{\frac{1}{\mu_0^2} - \frac{1}{\mu_1^2}} = c$$
+
+So by Neyman-Pearson, there exists a MP test.
+
+(2) Again, we want to find $k$ such that 
+$$\frac{f(\underline{x}, \mu, \tau_0)}{f(\underline{x}, \mu, \tau_1)} 
+= (\frac{\tau_0}{\tau_1})^{\frac{n}{2}} e^{-\sum_{i=1}^n\frac{(x_i-\mu)^2}{2x_i\mu^2}(\tau_0 - \tau_1)} \leq k$$
+$$ \Rightarrow \sum_{i=1}^n\frac{(x_i-\mu)^2}{2x_i\mu^2}(\tau_1 - \tau_0) \leq \ln(k)  (\frac{\tau_0}{\tau_1})^{-\frac{n}{2}} = k' \text{ and since } \tau_1 > \tau_0$$
+$$\Rightarrow  \sum_{i=1}^n\frac{(x_i-\mu)^2}{2x_i\mu^2} \leq \frac{k'}{\tau_1 - \tau_0} = c $$
+
+So by Neyman-Pearson, there exists a MP test. $\blacksquare$\\
+
+\textbf{Example} Let $\mathbb{X}_1, ..., \mathbb{X}_n$ be a random sample from $N(0, \sigma)$. Find most powerful test with significance level $\alpha$ for hypothesis $H_0: \sigma^2 = \sigma_0^2, H_1: \sigma^2 = \sigma_1^2$ where $\sigma_1^2 > \sigma_0^2$
+
+\textbf{Solution} The likelihood ratio is:
+$$\frac{L(\underline{x}, \sigma_0)}{L(\underline{x}, \sigma_1)} = (\frac{\sigma_1}{\sigma_0})^\frac{n}{2}e^{-\frac{1}{2}\sum_{i=1}^n x_i^2 (\frac{1}{\sigma_0^2} - \frac{1}{\sigma_1^2})} \leq k$$
+$$\Rightarrow -\frac{1}{2}\sum_{i=1}^n x_i^2 (\frac{1}{\sigma_0^2} - \frac{1}{\sigma_1^2}) \leq \ln(k (\frac{\sigma_0}{\sigma_1})^\frac{n}{2}) = k'$$
+And since $\sigma_1^2 > \sigma_0^2$
+$$\Rightarrow \sum_{i=1}^n x_i^2 \geq \frac{k'}{\frac{1}{\sigma_1^2} - \frac{1}{\sigma_0^2}} = c$$
+So by Neyman-Pearson, there exists a MP test.
+
+To solve for an explicit test, notice $\mathbb{Z}^2 \sim \chi^2(1)$, so:
+$$\alpha = \mathbb{P}(\sum X_i^2 \geq c | H_0 ) = \mathbb{P}(\frac{\sum X_i^2}{\sigma^2}) \geq \frac{c}{\sigma^2} | H_0 ) = \mathbb{P}(\frac{\sum X_i^2}{\sigma_0^2} \geq \frac{c}{\sigma_0^2})$$
+$$= \mathbb{P}(\chi^2(n) \geq \frac{c}{\sigma_0^2})$$
+So let $\chi^2_\alpha$ be the number such that $\alpha = \mathbb{P}(\chi^2(n) \geq \chi_\alpha^2)$. Then $c = \chi_\alpha^2 \sigma_0^2$. And $C = \{ \sum_{i=1}^n \mathbb{X}_n \geq c \}$ is the most powerful critical region of size $\alpha$. $\blacksquare$\\
+
+\textbf{Example} Let $\mathbb{X}_1, ..., \mathbb{X}_n$ be a random sample with p.d.f $\lambda kx^{k-1}e^{-\lambda x^k}$, with $x, \lambda, k>0$, and $k$ is known. Find the MP test of significance level $\alpha$ for $H_1: \lambda_0^2 = \lambda_1^2$, where $\lambda_1 < \lambda_0$.
+
+\textbf{Solution} The likelihood ratio is:
+$$\frac{f(\underline{x}, \lambda_0)}{f(\underline{x}, \lambda_1)} = \frac{\lambda_0}{\lambda_1} e^{-(\lambda_0 - \lambda_1)\sum_{i=1}^n x_i^k} \leq k'
+$$
+$$\Rightarrow \sum_{i=1}^n x_i^k \geq k' \frac{\lambda_1}{\lambda_0}(\lambda_0 - \lambda_1) = c$$
+So by Neyman-Pearson, there exists a MP test. 
+
+
+To solve for an explicit test, we need to find distribution of $\mathbb{X}^k$. Let $\mathbb{Y} = \mathbb{X}^k$, then
+$$f_{\mathbb{Y}}(y) = f_{\mathbb{X}}(y^{\frac{1}{k}}) \frac{1}{k} y^{\frac{1}{k}-1}  = \lambda e^{-\lambda y} \Rightarrow Y \sim exp(\lambda)$$
+So $2 \lambda \sum_{i=1}^n \mathbb{X}_i^k \sim Gamma(\alpha = n, \lambda = \frac{1}{2}) = \chi^2(2n)$
+
+So by Neyman-Pearson, there exists a MP test.
+
+$$\alpha = \mathbb{P}(\sum_{i=1}^n \mathbb{X}_i^k \geq c | H_0 ) = \mathbb{P}(2 \lambda \sum_{i=1}^n \mathbb{X}_i^k \geq 2 \lambda c | H_0) = \mathbb{P}(2\lambda_0 \sum_{i=1}^n \mathbb{X}_i^k \geq 2 \lambda_0 c)$$
+
+Let $\chi^2_\alpha$ be the number such that $\alpha = \mathbb{P}(\chi^2(2n) \geq \chi_\alpha^2)$, then $c = \frac{\chi^2_\alpha}{2 \lambda_0}$. $\blacksquare$\\
+
+\textbf{Example} Let $\mathbb{X}_1, ..., \mathbb{X}_n$ be a random sample from $Exp(1, \theta)$ with p.d.f $f(x) = e^{-(x-\theta)}, x>\theta$. Find the MP test of significance level $\alpha$ for $H_0:  \theta = \theta_0, H_1: \theta = \theta_1$.
+
+\textbf{Solution} Note $f(x) = e^{-(x-\theta)} I_{\{\theta, \infty\}}(x)$. Let $\mathbb{X}_{(1)}, ..., \mathbb{X}_{(n)}$ be the ordered statistics of $\mathbb{X}_1, ..., \mathbb{X}_n$. The joint distribution is
+$$f(\underline{x}, \theta) = e^{-\sum_{i=1}^n (x_i - \theta)} \prod_{i=1}^n I_{\{\theta, \infty\}}(x_i)$$
+And from the likelihood point of view,
+$$f(\underline{x}, \theta) = e^{-\sum_{i=1}^n (x_i - \theta)} \prod_{i=1}^n I_{\{-\infty, x_{(1)}\}}(\theta)$$
+So the likelihood function is
+$$\frac{f(\underline{x}, \theta_0)}{f(\underline{x}, \theta_1)} = e^{n(\theta_0 - \theta_1)} \frac{I_{\{-\infty, x_{(1)}\}}(\theta_0)}{I_{\{-\infty, x_{(1)}\}}(\theta_1)}$$
+Now since $\theta_1 > \theta_0$, if $I_{\{-\infty, x_{(1)}\}}(\theta_0) = 0$, then neither hypothesis is possible given that we observed the data that can not be generated by $\theta = \theta_0$ or $\theta = \theta_1$. If $I_{\{-\infty, x_{(1)}\}}(\theta_0) \neq 0$ and $I_{\{-\infty, x_{(1)}\}}(\theta_1) = 0$ ($\theta_0 \leq x_{(1)} < \theta_1$), then only $H_0$ is possible. And if $x_{(1)} \geq \theta_1$, then we want $k$ such that $e^{n(\theta_0 - \theta_1)} < k$. As long as $x_{(1)} \geq \theta_1$, $k$ can be anything larger than $e^{n(\theta_0 - \theta_1)} < k$. So by Neyman-Pearson theorem, there exist a most powerful test. To find the explicit test, let
+$$\alpha = \mathbb{P}(\mathbb{X}_{(1)} \geq c | H_0) \text{ where } c \geq \theta_1$$
+The distribution of $\mathbb{X}_{(1)}$ is given by ordered statistics
+$$f_{\mathbb{X}_{(1)}}(x) = n (1-F_{\mathbb{X}}(x))^{n-1} f_{\mathbb{X}}(x) = n e^{-n (x-\theta)} \sim Exp(n, \theta) $$
+So
+$$\alpha = \mathbb{P}(\mathbb{X}_{(1)} \geq c | H_0) = \int_c^\infty  n e^{-n (x-\theta_0)} \sim Exp(n, \theta_0) dx = e^{-n(c-\theta_0)}$$
+$$\Rightarrow c = -\frac{\ln(\alpha)}{n} - \theta_0$$
+Therefore for $c \geq \theta_1$ ($\alpha$ sufficiently small), the set $C = \{\underline{x} | x_{(1)} \geq c\}$ is the most powerful critical region with significance $\alpha$. $\blacksquare$
